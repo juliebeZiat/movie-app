@@ -3,25 +3,25 @@ import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
-  Button,
   SafeAreaView,
 } from 'react-native';
 import Input from '../components/Input';
 import Submit from '../components/Submit';
 
-function Home() {
+function Signin() {
   const { navigate } = useNavigation();
 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
+  const [userPasswordRepeat, setUserPasswordRepeat] = useState('');
 
-  const loginSubmit = () => {
+  const signinSubmit = () => {
     navigate('Welcome');
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>Authentication</Text>
+      <Text style={{ fontSize: 30 }}>Register</Text>
       <Text>Login or register into your favorite movie app build for azot.dev technical test</Text>
       <SafeAreaView>
         <Input
@@ -38,14 +38,17 @@ function Home() {
           changeField={setUserPassword}
           secureTextEntry
         />
+        <Input
+          name="password"
+          placeholder="Repeat Password"
+          value={userPasswordRepeat}
+          changeField={setUserPasswordRepeat}
+          secureTextEntry
+        />
       </SafeAreaView>
-      <Submit text="Authenticate" onPress={loginSubmit} />
-      <Button
-        title="Don't have an account yet ? Register here."
-        onPress={() => navigate('Signin')}
-      />
+      <Submit text="Authenticate" onPress={signinSubmit} />
     </View>
   );
 }
 
-export default Home;
+export default Signin;

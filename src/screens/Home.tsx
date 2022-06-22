@@ -1,54 +1,61 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
+  Button,
   SafeAreaView,
 } from 'react-native';
 import Input from '../components/Input';
 import Submit from '../components/Submit';
+import { Nav } from '../type/Nav';
+import useValidateEmail from '../hooks/useValidateEmail';
+import useValidatePassword from '../hooks/useValidatePassword';
 
-function Signin() {
-  const { navigate } = useNavigation();
-
+const Home: FC = () => {
+  const { navigate } = useNavigation<Nav>();
+  
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
-  const [userPasswordRepeat, setUserPasswordRepeat] = useState('');
 
-  const signinSubmit = () => {
-    navigate('Welcome');
+  const errorEmail = useValidateEmail(userEmail);
+  const errorPassword = useValidatePassword(userPassword);
+  
+  const handleLogin = () => {
+    if ((!errorEmail) && (!errorPassword)) {
+      navigate('Welcome');
+    }
   };
+
+  // console.log(Boolean(errorEmail));
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>Register</Text>
+      <Text style={{ fontSize: 30 }}>Authentication</Text>
       <Text>Login or register into your favorite movie app build for azot.dev technical test</Text>
       <SafeAreaView>
         <Input
-          name="email"
           placeholder="Email"
           value={userEmail}
           changeField={setUserEmail}
           secureTextEntry={false}
+          errorMessage={errorEmail}
         />
         <Input
-          name="password"
           placeholder="Password"
           value={userPassword}
           changeField={setUserPassword}
           secureTextEntry
-        />
-        <Input
-          name="password"
-          placeholder="Repeat Password"
-          value={userPasswordRepeat}
-          changeField={setUserPasswordRepeat}
-          secureTextEntry
+          errorMessage={errorPassword}
         />
       </SafeAreaView>
-      <Submit text="Authenticate" onPress={signinSubmit} />
+      <Submit text="Authenticate" onPress={handleLogin} />
+      <Button
+        title="Don't have an account yet ? Register here."
+        onPress={() => navigate('Signin')}
+      />
     </View>
   );
 }
 
-export default Signin;
+export default Home;

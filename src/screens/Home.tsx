@@ -1,19 +1,27 @@
 import React, { FC, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+
 import {
   View,
   Text,
   Button,
   SafeAreaView,
 } from 'react-native';
+
 import Input from '../components/Input';
 import Submit from '../components/Submit';
+
 import { Nav } from '../type/Nav';
+
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
+import { loginSubmit } from '../state/slices/authSlice';
+
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
+  const dispatch = useDispatch();
   
   const [userEmail, setUserEmail] = useState<string>('');
   const [userPassword, setUserPassword] = useState<string>('');
@@ -26,11 +34,9 @@ const Home: FC = () => {
   const handleLogin = () => {
     setSubmitted(true);
     if ((!errorEmail) && (!errorPassword)) {
-      navigate('Welcome');
+      dispatch(loginSubmit());
     }
   };
-
-  // console.log(Boolean(errorEmail));
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

@@ -1,18 +1,17 @@
 import React, { FC, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
 import {
   View,
   Text,
   SafeAreaView,
 } from 'react-native';
+
 import Input from '../components/Input';
 import Submit from '../components/Submit';
-import { Nav } from '../type/Nav';
+
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
 const Signin: FC = () => {
-  const { navigate } = useNavigation<Nav>();
 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -31,7 +30,6 @@ const Signin: FC = () => {
     }
     if ((!errorEmail) && (!errorPassword) && (userPassword === userPasswordRepeat)) {
       setErrorPasswordRepeat('');
-      navigate('Welcome');
     }
   };
 

@@ -17,12 +17,20 @@ const Signin: FC = () => {
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [userPasswordRepeat, setUserPasswordRepeat] = useState('');
+  const [errorPasswordRepeat, setErrorPasswordRepeat] = useState('');
+
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
 
   const signinSubmit = () => {
-    if ((!errorEmail) && (!errorPassword)) {
+    setSubmitted(true);
+    if (userPassword !== userPasswordRepeat) {
+      setErrorPasswordRepeat('Passwords must be same');
+    }
+    if ((!errorEmail) && (!errorPassword) && (userPassword === userPasswordRepeat)) {
+      setErrorPasswordRepeat('');
       navigate('Welcome');
     }
   };
@@ -36,20 +44,21 @@ const Signin: FC = () => {
           placeholder="Email"
           value={userEmail}
           onChangeText={setUserEmail}
-          errorMessage={errorEmail}
+          errorMessage={submitted ? errorEmail : undefined}
         />
         <Input
           placeholder="Password"
           value={userPassword}
           onChangeText={setUserPassword}
           secureTextEntry
-          errorMessage={errorPassword}
+          errorMessage={submitted ? errorPassword : undefined}
         />
         <Input
           placeholder="Repeat Password"
           value={userPasswordRepeat}
           onChangeText={setUserPasswordRepeat}
           secureTextEntry
+          errorMessage={errorPasswordRepeat}
         />
       </SafeAreaView>
       <Submit text="Authenticate" onPress={signinSubmit} />

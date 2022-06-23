@@ -1,14 +1,11 @@
 import { useState, useEffect } from 'react';
 
-const useValidatePassword = (password) => {
+export const useValidatePassword = (password) => {
   const [error, setError] = useState(null);
 
   const validatePasswordFormat = (userPassword) => {
     const regEx = /(?=.{4,}$)(?=.*[A-Z])(?=.*[0-9])/;
-    if (regEx.test(userPassword)) {
-      return true;
-    }
-    return false;
+    return regEx.test(userPassword);
   };
 
   useEffect(() => {

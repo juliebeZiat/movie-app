@@ -18,6 +18,7 @@ import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
 import { loginSubmit } from '../state/slices/authSlice';
+import axios from 'axios';
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -30,12 +31,18 @@ const Home: FC = () => {
 
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
-  
+
   const handleLogin = () => {
-    setSubmitted(true);
-    if ((!errorEmail) && (!errorPassword)) {
-      dispatch(loginSubmit());
-    }
+    const loginPost = async () => {
+      try {
+        const response = await axios.post('/auth', {email: userEmail, password: userPassword});
+        dispatch(loginSubmit());
+
+      } catch (error) {
+        setSubmitted(true);
+      }
+    };
+    return loginPost();
   };
 
   return (

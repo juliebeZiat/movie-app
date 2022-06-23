@@ -35,21 +35,20 @@ const Signin: FC = () => {
         <Input
           placeholder="Email"
           value={userEmail}
-          changeField={setUserEmail}
-          secureTextEntry={false}
+          onChangeText={setUserEmail}
           errorMessage={errorEmail}
         />
         <Input
           placeholder="Password"
           value={userPassword}
-          changeField={setUserPassword}
+          onChangeText={setUserPassword}
           secureTextEntry
           errorMessage={errorPassword}
         />
         <Input
           placeholder="Repeat Password"
           value={userPasswordRepeat}
-          changeField={setUserPasswordRepeat}
+          onChangeText={setUserPasswordRepeat}
           secureTextEntry
         />
       </SafeAreaView>

@@ -1,17 +1,12 @@
 import React, { FC } from 'react';
-import { TextInput, Text, StyleProp, TextStyle } from 'react-native';
+import { TextInput, Text, StyleProp, TextStyle, TextInputProps } from 'react-native';
 
-type InputType = {
-  placeholder: string;
-  value?: string;
-  changeField: ((text: string) => void);
-  secureTextEntry: boolean;
+type InputType = TextInputProps & {
   errorMessage?: string | null;
-  style?: StyleProp<TextStyle>;
 }
 
 const Input: FC<InputType> = ({
-  placeholder, value, changeField, secureTextEntry, errorMessage,
+  placeholder, value, onChangeText, secureTextEntry, errorMessage,
 }) => {
   return (
     <>
@@ -21,11 +16,10 @@ const Input: FC<InputType> = ({
         }}
         placeholder={placeholder}
         value={value}
-        onChangeText={changeField}
+        onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
-        errorMessage={errorMessage}
       />
-      <Text>{errorMessage}</Text>
+      {!!errorMessage && <Text>{errorMessage}</Text>}
     </>
   );
 }

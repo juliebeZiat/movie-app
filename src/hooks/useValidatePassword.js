@@ -4,11 +4,9 @@ const useValidatePassword = (password) => {
   const [error, setError] = useState(null);
 
   const validatePasswordFormat = (userPassword) => {
-    const regEx = /(?=.*[A-Z])+\d/;
-    if (userPassword.length > 3) {
-      if (regEx.test(userPassword)) {
-        return true;
-      }
+    const regEx = /(?=.{4,}$)(?=.*[A-Z])(?=.*[0-9])/;
+    if (regEx.test(userPassword)) {
+      return true;
     }
     return false;
   };

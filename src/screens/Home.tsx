@@ -15,13 +15,15 @@ import useValidatePassword from '../hooks/useValidatePassword';
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
   
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
   
   const handleLogin = () => {
+    setSubmitted(true);
     if ((!errorEmail) && (!errorPassword)) {
       navigate('Welcome');
     }
@@ -37,16 +39,15 @@ const Home: FC = () => {
         <Input
           placeholder="Email"
           value={userEmail}
-          changeField={setUserEmail}
-          secureTextEntry={false}
-          errorMessage={errorEmail}
+          onChangeText={setUserEmail}
+          errorMessage={submitted ? errorEmail : undefined}
         />
         <Input
           placeholder="Password"
           value={userPassword}
-          changeField={setUserPassword}
+          onChangeText={setUserPassword}
           secureTextEntry
-          errorMessage={errorPassword}
+          errorMessage={submitted ? errorPassword : undefined}
         />
       </SafeAreaView>
       <Submit text="Authenticate" onPress={handleLogin} />

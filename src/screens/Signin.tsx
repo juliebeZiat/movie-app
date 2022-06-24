@@ -1,41 +1,54 @@
 import React, { FC, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+
 import {
   View,
   Text,
+  Button,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 
 import Input from '../components/Input';
-import Submit from '../components/Submit';
+
+import { Nav } from '../type/Nav';
 
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
-const Signin: FC = () => {
+import { loginSubmit } from '../state/reducer/auth.reducer';
+import loginPost from '../services/authService';
 
-  const [userEmail, setUserEmail] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [userPasswordRepeat, setUserPasswordRepeat] = useState('');
-  const [errorPasswordRepeat, setErrorPasswordRepeat] = useState('');
-
+const Home: FC = () => {
+  const { navigate } = useNavigation<Nav>();
+  const dispatch = useDispatch();
+  
+  const [userEmail, setUserEmail] = useState<string>('');
+  const [userPassword, setUserPassword] = useState<string>('');
+  
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
-
-  const signinSubmit = () => {
+  
+  const handleSignin = async () => {
+    setIsLoading(true);
+    if (errorEmail && errorPassword) {
+      setIsLoading(false);
+    }
     setSubmitted(true);
-    if (userPassword !== userPasswordRepeat) {
-      setErrorPasswordRepeat('Passwords must be same');
+    const result = await loginPost({email: userEmail, password: userPassword});
+    if (result) {
+      dispatch(loginSubmit());
     }
-    if ((!errorEmail) && (!errorPassword) && (userPassword === userPasswordRepeat)) {
-      setErrorPasswordRepeat('');
-    }
+    setIsLoading(false);
   };
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>Register</Text>
+      <Text style={{ fontSize: 30 }}>Authentication</Text>
       <Text>Login or register into your favorite movie app build for azot.dev technical test</Text>
       <SafeAreaView>
         <Input
@@ -51,17 +64,18 @@ const Signin: FC = () => {
           secureTextEntry
           errorMessage={submitted ? errorPassword : undefined}
         />
-        <Input
-          placeholder="Repeat Password"
-          value={userPasswordRepeat}
-          onChangeText={setUserPasswordRepeat}
-          secureTextEntry
-          errorMessage={errorPasswordRepeat}
-        />
       </SafeAreaView>
-      <Submit text="Authenticate" onPress={signinSubmit} />
+      <Button
+        title='Authenticate'
+        onPress={handleSignin}
+      />
+      {isLoading && <ActivityIndicator />}
+      <Button
+        title="Don't have an account yet ? Register here."
+        onPress={() => navigate('Signup')}
+      />
     </View>
   );
 }
 
-export default Signin;
+export default Home;

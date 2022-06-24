@@ -18,7 +18,7 @@ import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
 import { loginSubmit } from '../state/reducer/auth.reducer';
-import loginPost from '../services/authService';
+import authService from '../services/authService';
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -39,12 +39,13 @@ const Home: FC = () => {
       setIsLoading(false);
     }
     setSubmitted(true);
-    const result = await loginPost({email: userEmail, password: userPassword});
+    const result = await authService.loginPost({email: userEmail, password: userPassword});
     if (result) {
       dispatch(loginSubmit());
     }
-    setIsLoading(false);
+    setIsLoading(false);    
   };
+  
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

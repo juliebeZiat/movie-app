@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useCallback, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 
@@ -33,7 +33,7 @@ const Home: FC = () => {
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
   
-  const handleSignin = async () => {
+  const handleSignin = useCallback (async () => {
     setIsLoading(true);
     if (errorEmail && errorPassword) {
       setIsLoading(false);
@@ -43,9 +43,9 @@ const Home: FC = () => {
     if (result) {
       dispatch(loginSubmit());
     }
-    setIsLoading(false);    
-  };
-  
+    setIsLoading(false);
+    return result;  
+  }, [{email: userEmail, password: userPassword}]);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

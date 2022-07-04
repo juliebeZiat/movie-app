@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -23,7 +23,7 @@ const Signin: FC = () => {
   const errorEmail = useValidateEmail(userEmail);
   const errorPassword = useValidatePassword(userPassword);
 
-  const handleSignup = () => {
+  const handleSignup = useCallback (async () => {
     setSubmitted(true);
     if (userPassword !== userPasswordRepeat) {
       setErrorPasswordRepeat('Passwords must be same');
@@ -31,7 +31,7 @@ const Signin: FC = () => {
     if ((!errorEmail) && (!errorPassword) && (userPassword === userPasswordRepeat)) {
       setErrorPasswordRepeat('');
     }
-  };
+  }, []);
 
   return (
     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>

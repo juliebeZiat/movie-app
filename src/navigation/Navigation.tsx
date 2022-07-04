@@ -6,9 +6,11 @@ import Home from '../screens/Home';
 import Signup from '../screens/Signup';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
+import MovieDetail from '../screens/MovieDetail';
 
 export type RootStackParamList = {
   Home: undefined;
+  Movie: { movieId: string};
   Signin: undefined;
   Signup: undefined;
 }
@@ -22,7 +24,10 @@ const Navigation: FC = () => {
     <NavigationContainer>
       <Stack.Navigator>
       {isLogged ? (
-          <Stack.Screen name="Home" component={Home} />
+          <>
+            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen name="Movie" component={MovieDetail} />
+          </>
       ) : (
           <>
             <Stack.Screen name="Signin" component={Signin} />

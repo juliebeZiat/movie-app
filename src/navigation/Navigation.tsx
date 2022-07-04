@@ -17,8 +17,7 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation: FC = () => {
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
-  console.log(isLogged);
-  
+
   return (
     <NavigationContainer>
       <Stack.Navigator>

@@ -1,11 +1,12 @@
 import React, { FC, useEffect } from 'react';
-import { Provider } from 'react-redux';
-import { store } from './state/store';
-import Navigation from './navigation/Navigation';
 import axios from 'axios';
-import { API_URL } from '@env';
+import { Provider } from 'react-redux';
 import { persistStore } from "redux-persist";
 import { PersistGate } from "redux-persist/integration/react";
+
+import { API_URL } from '@env';
+import Navigation from './navigation/Navigation';
+import { store } from './state/store';
 
 let persistor = persistStore(store);
 

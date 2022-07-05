@@ -3,25 +3,24 @@ import { Image, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../state/store";
+import { Endpoints } from "../type/endpoints";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
-import { Movie } from "../type/Movie";
-
-import fetchMovieService from "../services/fetchMovie";
+import movieService from "../services/movieService";
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Movie'>;
 
 const MovieDetail: FC<Props> = ({ route } : Props) => {
 
-  const [movie, setMovie] = useState<Movie>();
+  const [movie, setMovie] = useState<Endpoints.GetMovie.Response>();
   const { movieId } = route.params;
 
   const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     const fetchMovie = async (movieId: string) => {
-      const result = await fetchMovieService(movieId, token);
+      const result = await movieService.fetchMovieService(movieId, token);
       setMovie(result.data);
     }
     fetchMovie(movieId);

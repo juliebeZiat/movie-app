@@ -12,7 +12,7 @@ import MovieDetail from '../screens/MovieDetailScreen';
 
 export type RootStackParamList = {
   Home: undefined;
-  Movie: { movieId: string};
+  Movie: { movieId: string };
   Signin: undefined;
   Signup: undefined;
 }

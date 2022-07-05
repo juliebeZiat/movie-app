@@ -21,6 +21,7 @@ import useValidatePassword from '../hooks/useValidatePassword';
 import { setToken, loginSubmit } from '../state/reducer/auth.reducer';
 import authService from '../services/authService';
 
+
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
@@ -48,6 +49,7 @@ const Home: FC = () => {
     setIsLoading(false);
     return result;  
   }, [{email: userEmail, password: userPassword}]);
+
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>

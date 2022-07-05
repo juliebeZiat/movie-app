@@ -1,4 +1,3 @@
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import axios from "axios";
 import React, { FC, useEffect, useState } from "react";
@@ -21,9 +20,6 @@ const MovieDetail: FC<Props> = ({ route } : Props) => {
       const response = await axios.get(`movies/${movieId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.data.access_token) {
-        AsyncStorage.setItem("user", JSON.stringify(response.data));
-      }
       setMovie(response.data);
     };
     fetchMovie(movieId);

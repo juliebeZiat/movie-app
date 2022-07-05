@@ -6,6 +6,7 @@ import { persistReducer } from 'redux-persist';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
+  whitelist: ['auth']
 };
 
 const rootReducer = combineReducers({

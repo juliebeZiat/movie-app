@@ -2,7 +2,6 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import { View, Text, Button, FlatList, Image, TouchableHighlight } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 import authService from "../services/authService";
@@ -18,7 +17,6 @@ const Welcome: FC = () => {
   const [allMoviesList, setAllMoviesList] = useState<Movie[]>();
 
   const handleLogout = useCallback(() => {
-    authService.logout();
     dispatch(logout());
   }, []);
 
@@ -29,9 +27,6 @@ const Welcome: FC = () => {
       const response = await axios.get("movies/popular", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      if (response.data.access_token) {
-        AsyncStorage.setItem("user", JSON.stringify(response.data));
-      }
       setAllMoviesList(response.data);
     };
     fetchAllMovies();

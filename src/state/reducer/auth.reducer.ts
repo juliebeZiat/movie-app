@@ -20,7 +20,7 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       axios.defaults.headers.common = {'Authorization': `Bearer ${state.token}`};
-    }
+    },
   },
 });
 

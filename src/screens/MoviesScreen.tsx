@@ -2,14 +2,12 @@ import React, { FC, useCallback, useState, useEffect } from "react";
 import { View, Text, Button, FlatList, Image, TouchableHighlight } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 
-import axios from "axios";
-
-import authService from "../services/authService";
 import { logout } from "../state/reducer/auth.reducer";
 import { RootState } from "../state/store";
 import { useNavigation } from "@react-navigation/native";
 import { Nav } from "../type/Nav";
 import { Movie } from "../type/Movie";
+import fetchAllMoviesService from "../services/fetchAllMoviesService";
 
 const Welcome: FC = () => {
   const dispatch = useDispatch();
@@ -21,14 +19,12 @@ const Welcome: FC = () => {
   }, []);
 
   const token = useSelector((state: RootState) => state.auth.token);
-
+  
   useEffect(() => {
     const fetchAllMovies = async () => {
-      const response = await axios.get("movies/popular", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAllMoviesList(response.data);
-    };
+      const result = await fetchAllMoviesService(token);
+      setAllMoviesList(result.data);
+    }
     fetchAllMovies();
   }, []);
 

@@ -12,12 +12,14 @@ const Input: FC<InputType> = ({
     <>
       <TextInput
         style={{
-          height: 40, margin: 12, borderWidth: 1, padding: 10,
+          height: 50, width: 320, margin: 12, padding: 10, borderRadius: 10, fontSize: 25, backgroundColor: 'white'
         }}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
+        autoCapitalize='none'
+        keyboardType="email-address"
       />
       {!!errorMessage && <Text>{errorMessage}</Text>}
     </>

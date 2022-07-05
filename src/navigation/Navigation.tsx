@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
+import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
@@ -17,13 +17,17 @@ export type RootStackParamList = {
   Signup: undefined;
 }
 
+
 const Stack = createNativeStackNavigator<RootStackParamList>();
+
+const navTheme = DefaultTheme;
+navTheme.colors.background = '#FBF9FF';
 
 const Navigation: FC = () => {
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={navTheme}>
       <Stack.Navigator>
       {isLogged ? (
           <>

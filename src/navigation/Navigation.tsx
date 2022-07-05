@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Signin from '../screens/Signin';
-import Home from '../screens/Home';
-import Signup from '../screens/Signup';
+import Signin from '../screens/SigninScreen';
+import Home from '../screens/MoviesScreen';
+import Signup from '../screens/SignupScreen';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
-import MovieDetail from '../screens/MovieDetail';
+import MovieDetail from '../screens/MovieDetailScreen';
 
 export type RootStackParamList = {
   Home: undefined;

@@ -8,14 +8,14 @@ import axios from "axios";
 import authService from "../services/authService";
 import { logout } from "../state/reducer/auth.reducer";
 import { RootState } from "../state/store";
-import { Movies } from "../type/Movies";
 import { useNavigation } from "@react-navigation/native";
 import { Nav } from "../type/Nav";
+import { Movie } from "../type/Movie";
 
 const Welcome: FC = () => {
   const dispatch = useDispatch();
   const { navigate } = useNavigation<Nav>();
-  const [allMoviesList, setAllMoviesList] = useState<Movies[]>();
+  const [allMoviesList, setAllMoviesList] = useState<Movie[]>();
 
   const handleLogout = useCallback(() => {
     authService.logout();

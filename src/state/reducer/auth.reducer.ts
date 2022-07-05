@@ -3,19 +3,20 @@ import axios from 'axios';
 
 const initialState = {
   isLoggedIn: false,
-  token: null,
+  token: undefined,
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginSubmit: (state) => {
+    loginSubmit: (state, action) => {
       state.isLoggedIn = true;
+      state.token = action.payload;
     },
     logout: (state) => {
       state.isLoggedIn = false;
-      state.token = null;
+      state.token = undefined;
     },
     setToken: (state, action) => {
       state.token = action.payload;

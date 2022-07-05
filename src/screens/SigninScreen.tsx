@@ -41,7 +41,7 @@ const Home: FC = () => {
     setSubmitted(true);
     const result = await authService.loginPost({email: userEmail, password: userPassword});
     if (result) {
-      dispatch(loginSubmit());
+      dispatch(loginSubmit(result.access_token));
       dispatch(setToken(result.access_token));
     }
     setIsLoading(false);

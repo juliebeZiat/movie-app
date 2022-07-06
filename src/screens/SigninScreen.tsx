@@ -18,7 +18,7 @@ import { Nav } from '../type/Nav';
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
 
-import { setToken, loginSubmit } from '../state/reducer/auth.reducer';
+import { login } from '../state/reducer/auth.reducer';
 import authService from '../services/authService';
 
 
@@ -43,8 +43,7 @@ const Home: FC = () => {
     setSubmitted(true);
     const result = await authService.loginPost({email: userEmail, password: userPassword});
     if (result) {
-      dispatch(loginSubmit(result.access_token));
-      dispatch(setToken(result.access_token));
+      dispatch(login(result.access_token));
     }
     setIsLoading(false);
     return result;  

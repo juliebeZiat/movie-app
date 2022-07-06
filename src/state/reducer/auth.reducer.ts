@@ -10,21 +10,19 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    loginSubmit: (state, action) => {
+    login: (state, action) => {
       state.isLoggedIn = true;
       state.token = action.payload;
+      axios.defaults.headers.common = {'Authorization': `Bearer ${state.token}`};
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.token = undefined;
-    },
-    setToken: (state, action) => {
-      state.token = action.payload;
-      axios.defaults.headers.common = {'Authorization': `Bearer ${state.token}`};
+      axios.defaults.headers.common = {};
     },
   },
 });
 
-export const { loginSubmit, logout, setToken } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 export default authSlice;

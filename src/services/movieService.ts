@@ -9,9 +9,7 @@ const fetchMovieService = async (movieId: string, token: string | undefined) => 
 };
 
 const fetchAllMoviesService = async (token: string | undefined) => {
-  const response = await axios.get<Endpoints.ListMovies.Response>('movies/popular', {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
+  const response = await axios.get<Endpoints.ListMovies.Response>('movies/popular');
   return response;
 };
 

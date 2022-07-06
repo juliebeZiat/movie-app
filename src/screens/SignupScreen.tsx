@@ -4,6 +4,7 @@ import {
   Text,
   SafeAreaView,
   Button,
+  Pressable,
 } from 'react-native';
 
 import Input from '../components/Input';
@@ -34,9 +35,9 @@ const Signin: FC = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Text style={{ fontSize: 30 }}>Register</Text>
-      <Text>Login or register into your favorite movie app build for azot.dev technical test</Text>
+    <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
+      <Text style={{ fontSize: 50, fontWeight: 'bold'}}>Register</Text>
+      <Text style={{ fontSize: 25 }}>Login or register into your favorite movie app build for azot.dev technical test</Text>
       <SafeAreaView>
         <Input
           placeholder="Email"
@@ -59,12 +60,12 @@ const Signin: FC = () => {
           errorMessage={errorPasswordRepeat}
         />
       </SafeAreaView>
-      <Button
-        title='Create a new account'
+      <Pressable
         onPress={handleSignup}
+        style={{ backgroundColor: '#030303', padding: 15, borderRadius: 15 }}
       >
-        Go
-      </Button>
+        <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}>Create a new account</Text>
+      </Pressable>
     </View>
   );
 }

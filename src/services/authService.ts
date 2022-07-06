@@ -7,13 +7,8 @@ const loginPost = async({email, password}: Endpoints.Login.Request) => {
   return response.data;
 };
 
-const logout = () => {
-  AsyncStorage.clear();
-};
-
 const authService = {
-  loginPost,
-  logout
+  loginPost
 }
 
 export default authService;

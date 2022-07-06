@@ -49,7 +49,7 @@ const Welcome: FC = () => {
               return <Text style={{ color: 'white', fontSize: 15 }} key={genre.id}>{genre.name.toUpperCase()}</Text>
             })}
           </View>
-          <Pressable 
+          <Pressable
             onPress={() => navigate('Movie', {movieId: allMoviesList[0]._id})}
             style={{ backgroundColor: '#E50909', width: 120, padding: 8, borderRadius: 18 }}
           >
@@ -71,7 +71,7 @@ const Welcome: FC = () => {
             <View style={{ width: 150, margin: 10 }}>
               <Image
                 style={{ width: 150, height: 150, borderRadius: 20, overflow: "hidden", opacity: 5 }}
-                source={{ uri: item.poster_path }}
+                source={{ uri: item.backdrop_path }}
               />
               <View style={{ position: 'absolute', bottom: 8, left: 8, right: 8 }}>
                 <Text style={{ fontSize: 20, fontWeight: 'bold', color: 'white', marginBottom: 5 }}>

@@ -1,7 +1,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const initialState = {
+export interface authState {
+  isLoggedIn: boolean,
+  token: string | undefined
+}
+
+const initialState: authState = {
   isLoggedIn: false,
   token: undefined,
 };

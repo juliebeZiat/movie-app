@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { TextInput, Text, StyleProp, TextStyle, TextInputProps } from 'react-native';
+import { TextInput, Text, TextInputProps } from 'react-native';
 
 type InputType = TextInputProps & {
   errorMessage?: string | null;

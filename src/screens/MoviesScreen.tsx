@@ -1,14 +1,15 @@
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { View, Text, Button, FlatList, Image, TouchableHighlight, Pressable } from "react-native";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { logout } from "../state/reducer/auth.reducer";
-import { RootState } from "../state/store";
 import { useNavigation } from "@react-navigation/native";
 import { Nav } from "../type/Nav";
 
 import { Endpoints } from "../type/endpoints";
 import movieService from "../services/movieService";
+import { TextTypography } from "../components/typography/text.typography";
+import { ButtonTypography } from "../components/typography/buttons.typography";
 
 const Welcome: FC = () => {
   const dispatch = useDispatch();
@@ -18,12 +19,10 @@ const Welcome: FC = () => {
   const handleLogout = useCallback(() => {
     dispatch(logout());
   }, []);
-
-  const token = useSelector((state: RootState) => state.auth.token);
   
   useEffect(() => {
     const fetchAllMovies = async () => {
-      const result = await movieService.fetchAllMoviesService(token);
+      const result = await movieService.fetchAllMoviesService();
       setAllMoviesList(result.data);
     }
     fetchAllMovies();
@@ -43,22 +42,22 @@ const Welcome: FC = () => {
           source={{ uri: allMoviesList[0].poster_path }}
         />
         <View style={{ position: 'absolute', bottom: 20, left: 15, right: 15 }} >
-          <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', marginBottom: 10 }}>{(allMoviesList[0].title)}</Text>
+          <TextTypography.Subtitle style={{ color: 'white', marginBottom: 10 }}>{(allMoviesList[0].title)}</TextTypography.Subtitle>
           <View style={{ flex:1, flexDirection: 'row', flexWrap: 'wrap', marginBottom: 15 }}>
             {allMoviesList[0].genre_ids.map((genre) => {
-              return <Text style={{ color: 'white', fontSize: 15 }} key={genre.id}>{genre.name.toUpperCase()}</Text>
+              return <TextTypography.Caption style={{ color: 'white', fontSize: 15 }} key={genre.id}>{genre.name.toUpperCase()}</TextTypography.Caption>
             })}
           </View>
-          <Pressable
+          <ButtonTypography.Small
             onPress={() => navigate('Movie', {movieId: allMoviesList[0]._id})}
-            style={{ backgroundColor: '#E50909', width: 120, padding: 8, borderRadius: 18 }}
+            style={{ backgroundColor: '#E50909' }}
           >
-            <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold', textAlign: 'center' }}>Details</Text>
-          </Pressable>
+            <Text>Details</Text>
+          </ButtonTypography.Small>
         </View>
       </View>
 
-      <Text style={{ fontSize: 30, fontWeight: 'bold', margin: 15 }}>Movies</Text>
+      <TextTypography.Subtitle style={{ margin: 15 }}>Movies</TextTypography.Subtitle>
 
       <FlatList
         data={allMoviesList?.slice(1, allMoviesList.length)}
@@ -79,7 +78,7 @@ const Welcome: FC = () => {
                 </Text>
                 <View style={{ flex:1, flexDirection: 'row', flexWrap: 'wrap' }}>
                   {item.genre_ids.map((genre) => {
-                    return <Text style={{ color: 'white', fontSize: 12 }} key={genre.id}>{genre.name.toUpperCase()} </Text>
+                    return <TextTypography.Caption style={{ color: 'white' }} key={genre.id}>{genre.name.toUpperCase()} </TextTypography.Caption>
                   })}
                 </View>
               </View>

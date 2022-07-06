@@ -4,11 +4,11 @@ import {
   View,
   Text,
   SafeAreaView,
-  Button,
-  Pressable,
 } from 'react-native';
 
 import Input from '../components/Input';
+import { ButtonTypography } from '../components/typography/buttons.typography';
+import { TextTypography } from '../components/typography/text.typography';
 
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
@@ -39,8 +39,8 @@ const Signin: FC = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
-      <Text style={{ fontSize: 50, fontWeight: 'bold'}}>Register</Text>
-      <Text style={{ fontSize: 25 }}>Login or register into your favorite movie app build for azot.dev technical test</Text>
+      <TextTypography.Title>Register</TextTypography.Title>
+      <TextTypography.LargeText>Login or register into your favorite movie app build for azot.dev technical test</TextTypography.LargeText>
       <SafeAreaView>
         <Input
           placeholder="Email"
@@ -63,15 +63,16 @@ const Signin: FC = () => {
           errorMessage={errorPasswordRepeat}
         />
       </SafeAreaView>
-      <Pressable
+
+      <ButtonTypography.Large
         onPress={handleSignup}
-        style={{ backgroundColor: '#030303', padding: 15, borderRadius: 15 }}
       >
-        <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}>Create a new account</Text>
-      </Pressable>
-      <Pressable onPress={() => navigate('Signin')}>
-        <Text style={{ textAlign: 'center', fontSize: 20 }}>Already have an account ? Login here</Text>
-      </Pressable>
+        <Text>Create a new account</Text>
+      </ButtonTypography.Large>
+
+      <ButtonTypography onPress={() => navigate('Signin')}>
+        <Text>Already have an account ? Login here</Text>
+      </ButtonTypography>
     </View>
   );
 }

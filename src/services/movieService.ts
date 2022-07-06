@@ -8,7 +8,7 @@ const fetchMovieService = async (movieId: string, token: string | undefined) => 
   return response;
 };
 
-const fetchAllMoviesService = async (token: string | undefined) => {
+const fetchAllMoviesService = async () => {
   const response = await axios.get<Endpoints.ListMovies.Response>('movies/popular');
   return response;
 };

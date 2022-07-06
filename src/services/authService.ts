@@ -1,5 +1,4 @@
 import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Endpoints } from '../type/endpoints';
 
 const loginPost = async({email, password}: Endpoints.Login.Request) => {

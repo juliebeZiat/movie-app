@@ -8,6 +8,7 @@ import { Endpoints } from "../type/endpoints";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 import movieService from "../services/movieService";
+import { TextTypography } from "../components/typography/text.typography";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
 
@@ -40,15 +41,15 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
           />
         </View>
         <View style={{ margin: 15 }}>
-          <Text style={{ fontSize: 30, fontWeight: 'bold' }}>{movie.title}</Text>
+          <TextTypography.Subtitle>{movie.title}</TextTypography.Subtitle>
           <View style={{ flex:1, flexDirection: 'row', flexWrap: 'wrap', marginVertical: 10 }}>
             <Text>{new Date(movie.release_date).getFullYear()} - </Text>
               {movie.genre_ids.map((genre) => {
-                return <Text key={genre.id}>{genre.name.toUpperCase()} </Text>;
+                return <TextTypography.Caption key={genre.id}>{genre.name.toUpperCase()} </TextTypography.Caption>;
               })}
           </View>
           <Text style={{ marginVertical: 10 }}>{movie.vote_average}</Text>
-          <Text style={{ fontSize: 18 }}>{movie.overview}</Text>
+          <TextTypography>{movie.overview}</TextTypography>
         </View>
     </View>
   );

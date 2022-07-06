@@ -5,10 +5,8 @@ import { useDispatch } from 'react-redux';
 import {
   View,
   Text,
-  Button,
   SafeAreaView,
   ActivityIndicator,
-  Pressable,
 } from 'react-native';
 
 import Input from '../components/Input';
@@ -20,6 +18,8 @@ import useValidatePassword from '../hooks/useValidatePassword';
 
 import { login } from '../state/reducer/auth.reducer';
 import authService from '../services/authService';
+import { TextTypography } from '../components/typography/text.typography';
+import { ButtonTypography } from '../components/typography/buttons.typography';
 
 
 const Home: FC = () => {
@@ -52,8 +52,8 @@ const Home: FC = () => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
-      <Text style={{ fontSize: 50, fontWeight: 'bold'}}>Authentication</Text>
-      <Text style={{ fontSize: 25 }}>Login or register into your favorite movie app build for azot.dev technical test</Text>
+      <TextTypography.Title>Authentication</TextTypography.Title>
+      <TextTypography.LargeText>Login or register into your favorite movie app build for azot.dev technical test</TextTypography.LargeText>
       <SafeAreaView>
         <Input
           placeholder="Email"
@@ -69,18 +69,18 @@ const Home: FC = () => {
           errorMessage={submitted ? errorPassword : undefined}
         />
       </SafeAreaView>
-      <Pressable
-        style={{ backgroundColor: '#030303', padding: 15, borderRadius: 15 }}
-        onPress={handleSignin}
-      >
-        <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}>Authenticate</Text>
-      </Pressable>
+
+      <ButtonTypography.Large onPress={handleSignin}>
+        <Text>Authenticate</Text>
+      </ButtonTypography.Large>
+
       {isLoading && <ActivityIndicator />}
-      <Pressable
+
+      <ButtonTypography
         onPress={() => navigate('Signup')}
       >
-        <Text style={{ textAlign: 'center', fontSize: 20 }}>Don't have an account yet ? Register here.</Text>
-      </Pressable>
+        <Text>Don't have an account yet ? Register here.</Text>
+      </ButtonTypography>
     </View>
   );
 }

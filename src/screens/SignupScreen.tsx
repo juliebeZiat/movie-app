@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { FC, useState, useCallback } from 'react';
 import {
   View,
@@ -11,8 +12,10 @@ import Input from '../components/Input';
 
 import useValidateEmail from '../hooks/useValidateEmail';
 import useValidatePassword from '../hooks/useValidatePassword';
+import { Nav } from '../type/Nav';
 
 const Signin: FC = () => {
+  const { navigate } = useNavigation<Nav>();
 
   const [userEmail, setUserEmail] = useState('');
   const [userPassword, setUserPassword] = useState('');
@@ -65,6 +68,9 @@ const Signin: FC = () => {
         style={{ backgroundColor: '#030303', padding: 15, borderRadius: 15 }}
       >
         <Text style={{ color: 'white', fontSize: 25, fontWeight: 'bold', textAlign: 'center' }}>Create a new account</Text>
+      </Pressable>
+      <Pressable onPress={() => navigate('Signin')}>
+        <Text style={{ textAlign: 'center', fontSize: 20 }}>Already have an account ? Login here</Text>
       </Pressable>
     </View>
   );

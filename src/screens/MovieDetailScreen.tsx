@@ -30,7 +30,7 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, marginTop: 100 }}>
         <View style={{ alignItems: 'center', margin: 20 }}>
           <Image
             style={{ width: 200, height: 350, borderRadius: 20 }}

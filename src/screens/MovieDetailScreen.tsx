@@ -45,7 +45,9 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
           <View style={{ flex:1, flexDirection: 'row', flexWrap: 'wrap', marginVertical: 10 }}>
             <Text>{new Date(movie.release_date).getFullYear()} - </Text>
               {movie.genre_ids.map((genre) => {
-                return <TextTypography.Caption key={genre.id}>{genre.name.toUpperCase()} </TextTypography.Caption>;
+                return <TextTypography.Caption key={genre.id}>
+                  {genre.name.toUpperCase()} 
+                </TextTypography.Caption>;
               })}
           </View>
           <Text style={{ marginVertical: 10 }}>{movie.vote_average}</Text>

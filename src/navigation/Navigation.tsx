@@ -1,5 +1,5 @@
-import React, { FC } from 'react';
-import { DefaultTheme, NavigationContainer } from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import { DefaultTheme, NavigationContainer, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useSelector } from 'react-redux';
 import { RootState } from '../state/store';
@@ -19,14 +19,31 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// *** THEME ***
+
 const navTheme = DefaultTheme;
 navTheme.colors.background = '#FBF9FF';
+
+const CustomDefaultTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors
+  }
+}
+
+const CustomDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors
+  }
+}
+
 
 const Navigation: FC = () => {
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   return (
-    <NavigationContainer theme={navTheme}>
+    <NavigationContainer theme={CustomDefaultTheme}>
       <Stack.Navigator>
       {isLogged ? (
           <>

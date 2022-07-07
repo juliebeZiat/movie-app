@@ -17,10 +17,6 @@ TextTypography.Subtitle = ({style, ...props}: TextTypography) => (
   <TextTypography {...props} style={[{ fontSize: 30, fontWeight: 'bold' }, style]} />
 )
 
-TextTypography.Subtitle = ({style, ...props}: TextTypography) => (
-  <TextTypography {...props} style={[{ fontSize: 30, fontWeight: 'bold' }, style]} />
-)
-
 TextTypography.Caption = ({style, ...props}: TextTypography) => (
   <TextTypography {...props} style={[{ fontSize: 15 }, style]} />
 )

@@ -13,64 +13,94 @@ import Input from '../components/Input';
 
 import { Nav } from '../type/Nav';
 
-import useValidateEmail from '../hooks/useValidateEmail';
-import useValidatePassword from '../hooks/useValidatePassword';
-
 import { login } from '../state/reducer/auth.reducer';
 import authService from '../services/authService';
 import { TextTypography } from '../components/typography/text.typography';
 import { ButtonTypography } from '../components/typography/buttons.typography';
 
+import * as Yup from 'yup';
+import { Controller, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
-  
-  const [userEmail, setUserEmail] = useState<string>('');
-  const [userPassword, setUserPassword] = useState<string>('');
-  
-  const [submitted, setSubmitted] = useState<boolean>(false);
+
   const [isLoading, setIsLoading] = useState(false);
 
-  const errorEmail = useValidateEmail(userEmail);
-  const errorPassword = useValidatePassword(userPassword);
+  type FormValues = {
+    email: string;
+    password: string;
+  }
   
-  const handleSignin = useCallback (async () => {
+  const validationSchema = Yup.object({
+    email: Yup.string()
+      .email("Email must be an email")
+      .required("Email should not be empty"),
+    password: Yup.string()
+      .required("Password should not be empty")
+      .matches(/([0-9])/, "Password must contain at least one number")
+      .matches(/([a-z])/, "Password must contain at least one lowercase letter")
+      .matches(/([A-Z])/, "Password must contain at least one uppercase letter")
+      .min(4, "Password must be longer than or equal to 4 characters")
+  }).required();
+
+  const { control, handleSubmit, clearErrors } = useForm<FormValues>({
+    resolver: yupResolver(validationSchema)
+  });
+
+  //! useCallback
+  // const Signin = useCallback (async (data: {email: string, password: string}) => {
+  //   setIsLoading(true);
+  //   const result = await authService.loginPost({email: data.email, password: data.password});
+  //   if (result) {
+  //     dispatch(login(result.access_token));
+  //   }
+  //   clearErrors();
+  //   setIsLoading(false);
+  //   return result;
+  // }, [{email: data.email, password: data.password}]);
+
+  const Signin = async (data: {email: string, password: string}) => {
     setIsLoading(true);
-    if (errorEmail && errorPassword) {
-      setIsLoading(false);
-    }
-    setSubmitted(true);
-    const result = await authService.loginPost({email: userEmail, password: userPassword});
+    const result = await authService.loginPost({email: data.email, password: data.password});
     if (result) {
       dispatch(login(result.access_token));
     }
+    clearErrors();
     setIsLoading(false);
-    return result;  
-  }, [{email: userEmail, password: userPassword}]);
-
+    return result;
+  };
 
   return (
     <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
       <TextTypography.Title>Authentication</TextTypography.Title>
       <TextTypography.LargeText>Login or register into your favorite movie app build for azot.dev technical test</TextTypography.LargeText>
       <SafeAreaView>
-        <Input
-          placeholder="Email"
-          value={userEmail}
-          onChangeText={setUserEmail}
-          errorMessage={submitted ? errorEmail : undefined}
-        />
-        <Input
-          placeholder="Password"
-          value={userPassword}
-          onChangeText={setUserPassword}
-          secureTextEntry
-          errorMessage={submitted ? errorPassword : undefined}
-        />
+      <Controller control={control} name="email" defaultValue='' render={({ field: {onChange, value}, fieldState: {error}}) => (
+          <Input
+            placeholder="Email"
+            value={value}
+            onChangeText={onChange}
+            error={!!error}
+            errorDetails={error?.message}
+          />
+        )} />
+
+        <Controller control={control} name="password" defaultValue='' render={({ field: {onChange, value} , fieldState: {error}}) => (
+          <Input
+            placeholder="Password"
+            value={value}
+            onChangeText={onChange}
+            secureTextEntry
+            error={!!error}
+            errorDetails={error?.message}
+          />
+        )} />
       </SafeAreaView>
 
-      <ButtonTypography.Large onPress={handleSignin}>
+      <ButtonTypography.Large onPress={handleSubmit(Signin)}>
         <Text>Authenticate</Text>
       </ButtonTypography.Large>
 

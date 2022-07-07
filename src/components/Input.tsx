@@ -2,26 +2,46 @@ import React, { FC } from 'react';
 import { TextInput, Text, TextInputProps } from 'react-native';
 
 type InputType = TextInputProps & {
-  errorMessage?: string | null;
+  error?: boolean;
+  errorDetails?: string;
 }
 
 const Input: FC<InputType> = ({
-  placeholder, value, onChangeText, secureTextEntry, errorMessage,
+  placeholder, value, onChangeText, secureTextEntry, error = false, errorDetails,
 }) => {
   return (
     <>
       <TextInput
-        style={{
-          height: 50, width: 320, margin: 12, padding: 10, borderRadius: 10, fontSize: 25, backgroundColor: 'white'
-        }}
+        style={
+          error
+          ? {
+          height: 50,
+          width: 320,
+          margin: 12,
+          padding: 10,
+          borderRadius: 10,
+          fontSize: 25,
+          backgroundColor: "white",
+          borderWidth: 1,
+          borderColor: "red"}
+          : {
+            height: 50,
+            width: 320,
+            margin: 12,
+            padding: 10,
+            borderRadius: 10,
+            fontSize: 25,
+            backgroundColor: "white",
+          }
+        }
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
         secureTextEntry={secureTextEntry}
-        autoCapitalize='none'
+        autoCapitalize="none"
         keyboardType="email-address"
       />
-      {!!errorMessage && <Text>{errorMessage}</Text>}
+      {!!errorDetails && <Text>{errorDetails}</Text>}
     </>
   );
 }

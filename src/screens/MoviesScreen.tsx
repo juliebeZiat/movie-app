@@ -78,7 +78,9 @@ const Welcome: FC = () => {
                 </Text>
                 <View style={{ flex:1, flexDirection: 'row', flexWrap: 'wrap' }}>
                   {item.genre_ids.map((genre) => {
-                    return <TextTypography.Caption style={{ color: 'white' }} key={genre.id}>{genre.name.toUpperCase()} </TextTypography.Caption>
+                    return <TextTypography.Caption style={{ color: 'white' }} key={genre.id}>
+                        {genre.name.toUpperCase()} 
+                      </TextTypography.Caption>
                   })}
                 </View>
               </View>

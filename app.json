@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "juliebeziat",
     "name": "movie-app",
     "slug": "movie-app",
     "version": "1.0.0",

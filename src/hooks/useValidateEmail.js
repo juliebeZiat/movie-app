@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-//! Do not need it anymore => react-hook-form/yup
+//* Do not need it anymore => react-hook-form/yup
 
 const useValidateEmail = (email) => {
   const [error, setError] = useState(null);

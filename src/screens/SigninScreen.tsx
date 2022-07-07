@@ -1,29 +1,25 @@
-import React, { FC, useCallback, useState } from 'react';
-import { useNavigation } from '@react-navigation/native';
-import { useDispatch } from 'react-redux';
+import React, { FC, useCallback, useState } from "react";
+import { useNavigation, useTheme } from "@react-navigation/native";
+import { useDispatch } from "react-redux";
 
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ActivityIndicator,
-} from 'react-native';
+import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 
-import Input from '../components/Input';
+import Input from "../components/Input";
 
-import { Nav } from '../type/Nav';
+import { Nav } from "../type/Nav";
 
-import { login } from '../state/reducer/auth.reducer';
-import authService from '../services/authService';
-import { TextTypography } from '../components/typography/text.typography';
-import { ButtonTypography } from '../components/typography/buttons.typography';
+import { login } from "../state/reducer/auth.reducer";
+import authService from "../services/authService";
+import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 
-import * as Yup from 'yup';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signinValidationSchema } from "../functions/validationSchema";
+import { margin, padding } from "../styles";
+import TextTypography from "../styles/generalStyles/text.typography";
 
 const Home: FC = () => {
+  const { colors } = useTheme();
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
 
@@ -32,22 +28,12 @@ const Home: FC = () => {
   type FormValues = {
     email: string;
     password: string;
-  }
-  
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Email must be an email")
-      .required("Email should not be empty"),
-    password: Yup.string()
-      .required("Password should not be empty")
-      .matches(/([0-9])/, "Password must contain at least one number")
-      .matches(/([a-z])/, "Password must contain at least one lowercase letter")
-      .matches(/([A-Z])/, "Password must contain at least one uppercase letter")
-      .min(4, "Password must be longer than or equal to 4 characters")
-  }).required();
+  };
+
+  const validationSchema = signinValidationSchema;
 
   const { control, handleSubmit, clearErrors } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema)
+    resolver: yupResolver(validationSchema),
   });
 
   //! useCallback
@@ -62,9 +48,12 @@ const Home: FC = () => {
   //   return result;
   // }, [{email: data.email, password: data.password}]);
 
-  const Signin = async (data: {email: string, password: string}) => {
+  const Signin = async (data: { email: string; password: string }) => {
     setIsLoading(true);
-    const result = await authService.loginPost({email: data.email, password: data.password});
+    const result = await authService.loginPost({
+      email: data.email,
+      password: data.password,
+    });
     if (result) {
       dispatch(login(result.access_token));
     }
@@ -74,45 +63,65 @@ const Home: FC = () => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
-      <TextTypography.Title>Authentication</TextTypography.Title>
-      <TextTypography.LargeText>Login or register into your favorite movie app build for azot.dev technical test</TextTypography.LargeText>
-      <SafeAreaView>
-      <Controller control={control} name="email" defaultValue='' render={({ field: {onChange, value}, fieldState: {error}}) => (
-          <Input
-            placeholder="Email"
-            value={value}
-            onChangeText={onChange}
-            error={!!error}
-            errorDetails={error?.message}
-          />
-        )} />
+    <KeyboardAvoidingView
+      behavior="padding"
+      style={{ flex: 1 }}
+    >
+    <View style={{ justifyContent: 'space-evenly' }}>
+      <View style={{ padding: padding.md, marginVertical: margin.xxlg }}>
+        <TextTypography.Title style={{ marginBottom: margin.md }}>Authentication</TextTypography.Title>
+        <TextTypography.LargeText>
+          Login or register into your favorite movie app build for azot.dev
+          technical test
+        </TextTypography.LargeText>
+      </View>
+      <View style={{ alignItems: 'center' }}>
+        <Controller
+          control={control}
+          name="email"
+          defaultValue=""
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <Input
+              placeholder="Email"
+              value={value}
+              onChangeText={onChange}
+              error={!!error}
+              errorDetails={error?.message}
+            />
+          )}
+        />
 
-        <Controller control={control} name="password" defaultValue='' render={({ field: {onChange, value} , fieldState: {error}}) => (
-          <Input
-            placeholder="Password"
-            value={value}
-            onChangeText={onChange}
-            secureTextEntry
-            error={!!error}
-            errorDetails={error?.message}
-          />
-        )} />
-      </SafeAreaView>
+        <Controller
+          control={control}
+          name="password"
+          defaultValue=""
+          render={({ field: { onChange, value }, fieldState: { error } }) => (
+            <Input
+              placeholder="Password"
+              value={value}
+              onChangeText={onChange}
+              secureTextEntry
+              error={!!error}
+              errorDetails={error?.message}
+            />
+          )}
+        />
+      
+        <View style={{ marginTop: margin.lg, marginBottom: margin.lg }}>
+          <ButtonTypography.Large onPress={handleSubmit(Signin)}>
+            <Text>Authenticate</Text>
+          </ButtonTypography.Large>
+        </View>
+        {isLoading && <ActivityIndicator />}
 
-      <ButtonTypography.Large onPress={handleSubmit(Signin)}>
-        <Text>Authenticate</Text>
-      </ButtonTypography.Large>
+        <ButtonTypography onPress={() => navigate("Signup")}>
+          <Text>Don't have an account yet ? Register here.</Text>
+        </ButtonTypography>
 
-      {isLoading && <ActivityIndicator />}
-
-      <ButtonTypography
-        onPress={() => navigate('Signup')}
-      >
-        <Text>Don't have an account yet ? Register here.</Text>
-      </ButtonTypography>
+      </View>
     </View>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 export default Home;

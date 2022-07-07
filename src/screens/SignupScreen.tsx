@@ -1,20 +1,17 @@
-import { useNavigation } from '@react-navigation/native';
-import React, { FC } from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-} from 'react-native';
+import { useNavigation } from "@react-navigation/native";
+import React, { FC } from "react";
+import { View, Text, KeyboardAvoidingView } from "react-native";
 
-import Input from '../components/Input';
-import { ButtonTypography } from '../components/typography/buttons.typography';
-import { TextTypography } from '../components/typography/text.typography';
+import Input from "../components/Input";
+import { ButtonTypography } from "../styles/generalStyles/buttons.style";
+import TextTypography from "../styles/generalStyles/text.typography";
 
-import { Nav } from '../type/Nav';
+import { Nav } from "../type/Nav";
 
-import * as Yup from 'yup';
-import { Controller, useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { Controller, useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { signupValidationSchema } from "../functions/validationSchema";
+import { margin, padding } from "../styles";
 
 const Signin: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -23,80 +20,89 @@ const Signin: FC = () => {
     email: string;
     password: string;
     confirmPassword: string;
-  }
-  
-  const validationSchema = Yup.object({
-    email: Yup.string()
-      .email("Email must be an email")
-      .required("Email should not be empty"),
-    password: Yup.string()
-      .required("Password should not be empty")
-      .matches(/([0-9])/, "Password must contain at least one number")
-      .matches(/([a-z])/, "Password must contain at least one lowercase letter")
-      .matches(/([A-Z])/, "Password must contain at least one uppercase letter")
-      .min(4, "Password must be longer than or equal to 4 characters"),
-    confirmPassword: Yup.string()
-      .required("Please confirm your password")
-      .oneOf([Yup.ref("password")], "Password must be same"),
-  }).required();
-  
+  };
+
+  const validationSchema = signupValidationSchema;
+
   const { control, handleSubmit, clearErrors } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema)
-  })
+    resolver: yupResolver(validationSchema),
+  });
 
   const Signup = () => {
     clearErrors();
-  }
+  };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'space-evenly', width: 350, margin: 15 }}>
-      <TextTypography.Title>Register</TextTypography.Title>
-      <TextTypography.LargeText>Login or register into your favorite movie app build for azot.dev technical test</TextTypography.LargeText>
-      <SafeAreaView>
-        <Controller control={control} name="email" defaultValue='' render={({ field: {onChange, value}, fieldState: {error}}) => (
-          <Input
-            placeholder="Email"
-            value={value}
-            onChangeText={onChange}
-            error={!!error}
-            errorDetails={error?.message}
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <View style={{ justifyContent: 'space-evenly' }}>
+        <View style={{ padding: padding.md, marginVertical: margin.lg }}>
+        <TextTypography.Title style={{ marginBottom: margin.md }}>Register</TextTypography.Title>
+        <TextTypography.LargeText>
+          Login or register into your favorite movie app build for azot.dev
+          technical test
+        </TextTypography.LargeText>
+        </View>
+        <View style={{ alignItems: 'center' }}>
+          <Controller
+            control={control}
+            name="email"
+            defaultValue=""
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Input
+                placeholder="Email"
+                value={value}
+                onChangeText={onChange}
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
           />
-        )} />
 
-        <Controller control={control} name="password" defaultValue='' render={({ field: {onChange, value} , fieldState: {error}}) => (
-          <Input
-            placeholder="Password"
-            value={value}
-            onChangeText={onChange}
-            secureTextEntry
-            error={!!error}
-            errorDetails={error?.message}
+          <Controller
+            control={control}
+            name="password"
+            defaultValue=""
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Input
+                placeholder="Password"
+                value={value}
+                onChangeText={onChange}
+                secureTextEntry
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
           />
-        )} />
 
-        <Controller control={control} name="confirmPassword" defaultValue='' render={({ field: {onChange, value} , fieldState: {error}}) => (
-          <Input
-            placeholder="Repeat Password"
-            value={value}
-            onChangeText={onChange}
-            secureTextEntry
-            error={!!error}
-            errorDetails={error?.message}
+          <Controller
+            control={control}
+            name="confirmPassword"
+            defaultValue=""
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Input
+                placeholder="Repeat Password"
+                value={value}
+                onChangeText={onChange}
+                secureTextEntry
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
           />
-        )} />
-      </SafeAreaView>
 
-      <ButtonTypography.Large
-        onPress={handleSubmit(Signup)}
-      >
-        <Text>Create a new account</Text>
-      </ButtonTypography.Large>
+          <View style={{ marginTop: margin.lg, marginBottom: margin.lg }}>
+            <ButtonTypography.Large onPress={handleSubmit(Signup)}>
+              <Text>Create a new account</Text>
+            </ButtonTypography.Large>
+          </View>
+        </View>
+        <ButtonTypography onPress={() => navigate("Signin")}>
+          <Text>Already have an account ? Login here</Text>
+        </ButtonTypography>
 
-      <ButtonTypography onPress={() => navigate('Signin')}>
-        <Text>Already have an account ? Login here</Text>
-      </ButtonTypography>
-    </View>
+      </View>
+    </KeyboardAvoidingView>
   );
-}
+};
 
 export default Signin;

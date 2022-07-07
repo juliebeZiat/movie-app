@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
-import { TextInput, Text, TextInputProps } from 'react-native';
+import { TextInputProps } from 'react-native';
+import { TextInputStyle } from '../styles/generalStyles/form.style';
+import TextTypography from '../styles/generalStyles/text.typography';
 
 type InputType = TextInputProps & {
   error?: boolean;
@@ -11,29 +13,8 @@ const Input: FC<InputType> = ({
 }) => {
   return (
     <>
-      <TextInput
-        style={
-          error
-          ? {
-          height: 50,
-          width: 320,
-          margin: 12,
-          padding: 10,
-          borderRadius: 10,
-          fontSize: 25,
-          backgroundColor: "white",
-          borderWidth: 1,
-          borderColor: "red"}
-          : {
-            height: 50,
-            width: 320,
-            margin: 12,
-            padding: 10,
-            borderRadius: 10,
-            fontSize: 25,
-            backgroundColor: "white",
-          }
-        }
+      <TextInputStyle
+        style={ error ? { borderColor: 'red', borderWidth: 1 } : ''}
         placeholder={placeholder}
         value={value}
         onChangeText={onChangeText}
@@ -41,7 +22,7 @@ const Input: FC<InputType> = ({
         autoCapitalize="none"
         keyboardType="email-address"
       />
-      {!!errorDetails && <Text>{errorDetails}</Text>}
+      {!!errorDetails && <TextTypography.Error>{errorDetails}</TextTypography.Error>}
     </>
   );
 }

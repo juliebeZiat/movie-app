@@ -1,5 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
+import { StarIcon } from "react-native-heroicons/solid";
+import { StarIcon as StarIconOutline } from "react-native-heroicons/outline";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../state/store";
@@ -33,6 +35,20 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
     return null;
   }
 
+  const totalStars = 5;
+
+  const countStars = (note: number) => {
+    const stars = [];
+    for (let i = 0; i < totalStars; i++) {
+      if (i < note) {
+        stars.push(<StarIcon key={i} color="#E2CF5D" />);
+      } else {
+        stars.push(<StarIconOutline key={i} color={colors.text} />);
+      }
+    }
+    return stars;
+  };
+
   return (
     <View style={{ backgroundColor: colors.background }}>
     <ImageBackground
@@ -56,11 +72,13 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
               <TextTypography.Caption>{new Date(movie.release_date).getFullYear() + ' - '}</TextTypography.Caption>
                 {movie.genre_ids.map((genre) => {
                   return <TextTypography.Caption key={genre.id}>
-                    {genre.name.toUpperCase() + ' '} 
+                    {genre.name.toUpperCase() + ' '}
                   </TextTypography.Caption>;
                 })}
             </View>
-            <TextTypography.Caption style={{ marginVertical: margin.tiny }}>{movie.vote_average}</TextTypography.Caption>
+            <View style={{ flexDirection: 'row', marginVertical: margin.sm }}>
+              {countStars(Math.round(movie.vote_average/2))}
+            </View>
             <TextTypography.Text>{movie.overview}</TextTypography.Text>
           </ScrollView>
       </View>

@@ -11,6 +11,7 @@ import MovieDetail from '../screens/MovieDetailScreen';
 import { LargeLogo, Logo } from '../styles/generalStyles/logo.style';
 import { lightTheme } from '../styles/themes/light';
 import { darkTheme } from '../styles/themes/dark';
+import { useColorScheme } from 'react-native';
 
 export type RootStackParamList = {
   Home: undefined;
@@ -23,10 +24,12 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const Navigation: FC = () => {
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const scheme = useColorScheme();
+  
   const { colors } = useTheme();
 
   return (
-    <NavigationContainer theme={darkTheme}>
+    <NavigationContainer theme={scheme === 'dark' ? darkTheme : lightTheme}>
       <Stack.Navigator>
       {isLogged ? (
           <>

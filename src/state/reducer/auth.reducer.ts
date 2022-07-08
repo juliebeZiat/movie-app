@@ -1,16 +1,23 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { RootState } from '../store';
 
 export interface authState {
   isLoggedIn: boolean,
   token: string | undefined,
-  darkTheme: boolean,
+  theme: keyof typeof THEMES,
+}
+
+export enum THEMES {
+  LIGHT = 'light',
+  DARK = 'dark',
+  SYSTEM = 'system',
 }
 
 const initialState: authState = {
   isLoggedIn: false,
   token: undefined,
-  darkTheme: false,
+  theme: 'SYSTEM',
 };
 
 const authSlice = createSlice({
@@ -27,12 +34,17 @@ const authSlice = createSlice({
       state.token = undefined;
       axios.defaults.headers.common = {};
     },
-    toggleTheme: (state) => {
-      state.darkTheme = !state.darkTheme;
+    // toggleTheme: (state) => {
+    //   state.darkTheme = !state.darkTheme;
+    // },
+    setTheme: (state: RootState, { payload }: PayloadAction<authState["theme"]>) => {
+      state.theme = payload;
     }
   },
 });
 
-export const { login, logout, toggleTheme } = authSlice.actions;
+export const themeSelector = (state: RootState): authState["theme"] => state.auth.theme;
+
+export const { login, logout, toggleTheme, setTheme } = authSlice.actions;
 
 export default authSlice;

@@ -11,11 +11,9 @@ import Signup from "../screens/SignupScreen";
 import MovieDetail from "../screens/MovieDetailScreen";
 import Settings from "../screens/SettingsScreen";
 
-import { lightTheme } from "../styles/themes/light";
-import { darkTheme } from "../styles/themes/dark";
-import { useColorScheme } from "react-native";
 import { NavStyleLogin, NavStyleLogout } from "../styles/generalStyles/nav.style";
 import { color } from "../styles";
+import { useAppTheme } from "../hooks/useAppTheme";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -28,16 +26,13 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const Navigation: FC = () => {
-  //? const scheme = useColorScheme();
-  //? theme={scheme === "dark" ? darkTheme : lightTheme}
-  
+const Navigation: FC = () => {  
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const isDarkTheme = useSelector((state: RootState) => state.auth.darkTheme);
 
+  const {theme} = useAppTheme();
 
   return (
-    <NavigationContainer theme={isDarkTheme ? darkTheme : lightTheme}>
+    <NavigationContainer theme={theme}>
       <Stack.Navigator>
         {isLogged ? (
           <>
@@ -54,7 +49,7 @@ const Navigation: FC = () => {
               options={{
                 headerTransparent: true,
                 headerTitle: "",
-                headerTintColor: isDarkTheme ? color.light : color.dark,
+                headerTintColor: color.light,
                 headerBackTitle: "",
               }}
             />
@@ -64,7 +59,7 @@ const Navigation: FC = () => {
               options={{
                 headerTransparent: true,
                 headerTitle: "",
-                headerTintColor: isDarkTheme ? color.light : color.dark,
+                headerTintColor: color.dark,
                 headerBackTitle: "",
               }}
             />

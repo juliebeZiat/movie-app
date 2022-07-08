@@ -40,7 +40,7 @@ ButtonTypography.Small = ({ style, ...props }: ButtonTextTypography, { onPress }
       <Text
         {...props}
         style={[{
-          color: colors.text,
+          color: colors.background,
           fontSize: font.md,
           fontWeight: 'bold',
           textAlign: 'center',
@@ -64,6 +64,24 @@ ButtonTypography.Large = ({ style, ...props }: ButtonTextTypography, { onPress }
           fontWeight: "bold",
           textAlign: "center",
           width: 300,
+        }, style]}
+      />
+    </Pressable>
+  )
+};
+
+ButtonTypography.Tiny = ({ style, ...props }: ButtonTextTypography, { onPress }: ButtonTypography) => {
+  const { colors } = useTheme();
+  return (
+    <Pressable
+      style={[{ paddingHorizontal: padding.sm, paddingVertical: padding.xtiny, backgroundColor: colors.text, borderRadius: radius.xlg, width: 130 }, style]}
+      onPress={onPress}
+    >
+      <Text
+        {...props}
+        style={[{
+          color: colors.background,
+          fontSize: font.md,
         }, style]}
       />
     </Pressable>

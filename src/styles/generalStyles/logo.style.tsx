@@ -7,7 +7,7 @@ import TextTypography from './text.typography';
 export const Logo: FC = () => {
   const { colors } = useTheme();
   return (
-    <View style={{ height: 100, padding: padding.sm, backgroundColor: colors.background, flexDirection: 'row', flexWrap: 'wrap' }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       <TextTypography.Subtitle style={{ paddingTop: padding.xlg, paddingLeft: 15 }}>Logo</TextTypography.Subtitle>
       <TextTypography.Subtitle style={{ paddingTop: padding.xlg, color: color.primary }}> .</TextTypography.Subtitle>
     </View>
@@ -15,11 +15,10 @@ export const Logo: FC = () => {
 };
 
 export const LargeLogo = () => {
-  const { colors } = useTheme();
   return (
-    <View style={{ height: 100, padding: padding.sm, backgroundColor: colors.background, flexDirection: 'row', flexWrap: 'wrap' }}>
-      <TextTypography.Title style={{ paddingTop: padding.md }}>Logo</TextTypography.Title>
-      <TextTypography.Title style={{ paddingTop: padding.md, color: color.primary }}> .</TextTypography.Title>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padding.md }}>
+      <TextTypography.Title>Logo</TextTypography.Title>
+      <TextTypography.Title style={{ color: color.primary }}> .</TextTypography.Title>
     </View>
   )
 };

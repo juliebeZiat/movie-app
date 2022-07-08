@@ -2,7 +2,7 @@ import React, { FC, useCallback, useState } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
-import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView, Pressable } from "react-native";
 
 import Input from "../components/Input";
 
@@ -19,7 +19,6 @@ import { margin, padding } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 
 const Home: FC = () => {
-  const { colors } = useTheme();
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
 

@@ -3,12 +3,14 @@ import axios from 'axios';
 
 export interface authState {
   isLoggedIn: boolean,
-  token: string | undefined
+  token: string | undefined,
+  darkTheme: boolean,
 }
 
 const initialState: authState = {
   isLoggedIn: false,
   token: undefined,
+  darkTheme: false,
 };
 
 const authSlice = createSlice({
@@ -25,9 +27,12 @@ const authSlice = createSlice({
       state.token = undefined;
       axios.defaults.headers.common = {};
     },
+    toggleTheme: (state) => {
+      state.darkTheme = !state.darkTheme;
+    }
   },
 });
 
-export const { login, logout } = authSlice.actions;
+export const { login, logout, toggleTheme } = authSlice.actions;
 
 export default authSlice;

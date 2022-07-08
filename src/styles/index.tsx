@@ -13,6 +13,7 @@ export const color  = {
 }
 
 export const padding = {
+  xtiny: 5,
   tiny: 10,
   sm: 15,
   md: 20,

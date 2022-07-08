@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useState, useEffect } from "react";
+import React, { FC, useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,9 +8,7 @@ import {
   TouchableOpacity,
   Image
 } from "react-native";
-import { useDispatch } from "react-redux";
 
-import { logout } from "../state/reducer/auth.reducer";
 import { useNavigation } from "@react-navigation/native";
 import { Nav } from "../type/Nav";
 
@@ -21,13 +19,8 @@ import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 import { color, dimensions, font, margin, radius } from "../styles";
 
 const Welcome: FC = () => {
-  const dispatch = useDispatch();
   const { navigate } = useNavigation<Nav>();
   const [allMoviesList, setAllMoviesList] = useState<Endpoints.ListMovies.Response>();
-
-  const handleLogout = useCallback(() => {
-    dispatch(logout());
-  }, []);
 
   useEffect(() => {
     const fetchAllMovies = async () => {
@@ -43,10 +36,10 @@ const Welcome: FC = () => {
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <Button title="logout" onPress={handleLogout}></Button>
       <ScrollView
         showsVerticalScrollIndicator={false}
         style={{ width: dimensions.fullWidth - 50 }}
+        nestedScrollEnabled = {true}
       >
         {/* // First element */}
         <TouchableOpacity onPress={() => navigate("Movie", { movieId: allMoviesList[0]._id })}>

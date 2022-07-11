@@ -2,7 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { PressableProps } from 'react-native';
 import { Pressable, Text, TextProps } from 'react-native';
-import { font, padding, radius } from '..';
+import { color, font, padding, radius } from '..';
 
 interface ButtonTypography extends PressableProps {
   children: never[],
@@ -40,7 +40,7 @@ ButtonTypography.Small = ({ style, ...props }: ButtonTextTypography, { onPress }
       <Text
         {...props}
         style={[{
-          color: colors.background,
+          color: color.light,
           fontSize: font.md,
           fontWeight: 'bold',
           textAlign: 'center',

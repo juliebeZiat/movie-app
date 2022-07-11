@@ -9,8 +9,6 @@ import TextTypography from "../styles/generalStyles/text.typography";
 import { Nav } from "../type/Nav";
 
 import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signupValidationSchema } from "../functions/validationSchema";
 import { margin, padding } from "../styles";
 
 const Signin: FC = () => {
@@ -22,10 +20,12 @@ const Signin: FC = () => {
     confirmPassword: string;
   };
 
-  const validationSchema = signupValidationSchema;
-
-  const { control, handleSubmit, clearErrors } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema),
+  const { control, handleSubmit, clearErrors, watch } = useForm<FormValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      confirmPassword: ''
+    }
   });
 
   const Signup = () => {
@@ -46,7 +46,13 @@ const Signin: FC = () => {
           <Controller
             control={control}
             name="email"
-            defaultValue=""
+            rules={{
+              required: "Email should not be empty",
+              pattern: {
+                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                message: "Email must be an email",
+              },
+            }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Input
                 placeholder="Email"
@@ -61,7 +67,17 @@ const Signin: FC = () => {
           <Controller
             control={control}
             name="password"
-            defaultValue=""
+            rules={{
+              required: "Password should not be empty",
+              minLength: {
+                value: 4,
+                message: "Password must be longer than or equal to 4 characters"
+              },
+              pattern: {
+                value: /(?=.*[A-Z])(?=.*[0-9])/,
+                message: "Password must contain at least one number and one uppercase",
+              },
+            }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Input
                 placeholder="Password"
@@ -77,7 +93,10 @@ const Signin: FC = () => {
           <Controller
             control={control}
             name="confirmPassword"
-            defaultValue=""
+            rules={{
+              required: "Please confirm your password",
+              validate: value => value === watch('password') || "Password do not match"
+            }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (
               <Input
                 placeholder="Repeat Password"

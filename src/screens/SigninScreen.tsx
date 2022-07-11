@@ -13,8 +13,7 @@ import authService from "../services/authService";
 import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 
 import { Controller, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { signinValidationSchema } from "../functions/validationSchema";
+
 import { margin, padding } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 
@@ -29,11 +28,13 @@ const Home: FC = () => {
     password: string;
   };
 
-  const validationSchema = signinValidationSchema;
-
   const { control, handleSubmit, clearErrors } = useForm<FormValues>({
-    resolver: yupResolver(validationSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    }
   });
+  
 
   //! useCallback
   // const Signin = useCallback (async (data: {email: string, password: string}) => {
@@ -78,13 +79,19 @@ const Home: FC = () => {
         <Controller
           control={control}
           name="email"
-          defaultValue=""
+          rules={{
+            required: "Email should not be empty",
+            pattern: {
+              value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+              message: "Email must be an email",
+            },
+          }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Input
+              error={!!error}
               placeholder="Email"
               value={value}
               onChangeText={onChange}
-              error={!!error}
               errorDetails={error?.message}
             />
           )}
@@ -93,7 +100,17 @@ const Home: FC = () => {
         <Controller
           control={control}
           name="password"
-          defaultValue=""
+          rules={{
+            required: "Password should not be empty",
+            minLength: {
+              value: 4,
+              message: "Password must be longer than or equal to 4 characters"
+            },
+            pattern: {
+              value: /(?=.*[A-Z])(?=.*[0-9])/,
+              message: "Password must contain at least one number and one uppercase",
+            },
+          }}
           render={({ field: { onChange, value }, fieldState: { error } }) => (
             <Input
               placeholder="Password"

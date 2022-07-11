@@ -31,7 +31,7 @@ const LargeText = ({style, ...props}: TextTypography) => (
 );
 
 const Error = ({style, ...props}: TextTypography) => (
-  <Text {...props} style={[{ fontSize: font.sm, color: color.primary, marginLeft: margin.sm }, style]} />
+  <Text {...props} style={[{ fontSize: font.sm, color: color.primary, alignSelf: 'stretch', marginLeft: margin.xxlg }, style]} />
 );
 
 const Disabled = ({style, ...props}: TextTypography) => {

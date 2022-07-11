@@ -22,8 +22,6 @@ const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
 
-  const [isLoading, setIsLoading] = useState(false);
-
   type FormValues = {
     email: string;
     password: string;
@@ -119,7 +117,7 @@ const Home: FC = () => {
             <Text>Authenticate</Text>
           </ButtonTypography.Large>
         </View>
-        {isLoading && <ActivityIndicator />}
+        {loginQuery.isLoading && <ActivityIndicator />}
 
         <ButtonTypography onPress={() => navigate("Signup")}>
           <Text>Don't have an account yet ? Register here.</Text>

@@ -1,10 +1,8 @@
 import axios from "axios";
 import { Endpoints } from "../type/endpoints";
 
-const fetchMovieService = async (movieId: string, token: string | undefined) => {
-  const response = await axios.get<Endpoints.GetMovie.Response>(`movies/${movieId}`, {
-    headers: { 'Authorization': `Bearer ${token}` }
-  });
+const fetchMovieService = async (movieId: string) => {
+  const response = await axios.get<Endpoints.GetMovie.Response>(`movies/${movieId}`);
   return response;
 };
 

@@ -8,25 +8,32 @@ import movieService from "../services/movieService";
 import { FirstItemMoviesScreen } from "../components/MoviesScreen/FirstItem";
 import { ListItems } from "../components/MoviesScreen/ListItems";
 import { useQuery } from "react-query";
+import { IQueryAllMovies } from "../type/queries";
+import { LoadingIndicator } from "../components/LoadingIndicator";
 
 const Welcome: FC = () => {
+  const fetchAllMovies = async () => {
+    const result = await movieService.fetchAllMoviesService();
+    return result;
+  };
 
-  const result = async() => await movieService.fetchAllMoviesService();
-  const query = useQuery(['movies'], result);
-  const allMoviesList = query.data?.data;
+  const { data, isLoading, isSuccess, isFetching } = useQuery<IQueryAllMovies, Error>(["movies"], fetchAllMovies);
 
-  if (!allMoviesList) {
-    return null;
-  }
+  if (!data) return null;
+  if (isLoading || isFetching) return <LoadingIndicator />;
+
+  const allMoviesList = data.data;
 
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
-      <SafeAreaView
-        style={{ width: dimensions.fullWidth - 50 }}
-      >
-        <FirstItemMoviesScreen allMoviesList={allMoviesList} />
-        <ListItems allMoviesList={allMoviesList} />
-      </SafeAreaView>
+      {isSuccess && data ? (
+        <SafeAreaView style={{ width: dimensions.fullWidth - 50 }}>
+          <FirstItemMoviesScreen allMoviesList={allMoviesList} />
+          <ListItems allMoviesList={allMoviesList} />
+        </SafeAreaView>
+      ) : (
+        <LoadingIndicator />
+      )}
     </View>
   );
 };

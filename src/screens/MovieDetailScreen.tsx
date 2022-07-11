@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC } from "react";
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import { StarIcon } from "react-native-heroicons/solid";
 import { StarIcon as StarIconOutline } from "react-native-heroicons/outline";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../state/store";
-import { Endpoints } from "../type/endpoints";
+
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
@@ -13,23 +13,19 @@ import movieService from "../services/movieService";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { dimensions, margin, radius } from "../styles";
 import { useTheme } from "@react-navigation/native";
+import { useQuery } from "react-query";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
 
 const MovieDetail: FC<Props> = ({ route }: Props) => {
   const { colors } = useTheme();
-  const [movie, setMovie] = useState<Endpoints.GetMovie.Response>();
   const { movieId } = route.params;
 
   const token = useSelector((state: RootState) => state.auth.token);
 
-  useEffect(() => {
-    const fetchMovie = async (movieId: string) => {
-      const result = await movieService.fetchMovieService(movieId, token);
-      setMovie(result.data);
-    };
-    fetchMovie(movieId);
-  }, []);
+  const result = async() => await movieService.fetchMovieService(movieId, token);
+  const query = useQuery(['movie'], result);
+  const movie = query.data?.data;
 
   if (!movie) {
     return null;

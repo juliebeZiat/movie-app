@@ -1,24 +1,19 @@
-import React, { FC, useState, useEffect } from "react";
+import React, { FC } from "react";
 import { View } from "react-native";
 import { dimensions } from "../styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { Endpoints } from "../type/endpoints";
 import movieService from "../services/movieService";
 
 import { FirstItemMoviesScreen } from "../components/MoviesScreen/FirstItem";
 import { ListItems } from "../components/MoviesScreen/ListItems";
+import { useQuery } from "react-query";
 
 const Welcome: FC = () => {
-  const [allMoviesList, setAllMoviesList] = useState<Endpoints.ListMovies.Response>();
 
-  useEffect(() => {
-    const fetchAllMovies = async () => {
-      const result = await movieService.fetchAllMoviesService();
-      setAllMoviesList(result.data);
-    };
-    fetchAllMovies();
-  }, []);
+  const result = async() => await movieService.fetchAllMoviesService();
+  const query = useQuery(['movies'], result);
+  const allMoviesList = query.data?.data;
 
   if (!allMoviesList) {
     return null;

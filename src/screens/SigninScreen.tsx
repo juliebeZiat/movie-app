@@ -16,6 +16,7 @@ import { Controller, useForm } from "react-hook-form";
 
 import { margin, padding } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
+import { useMutation } from "react-query";
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -34,32 +35,22 @@ const Home: FC = () => {
       password: '',
     }
   });
-  
 
-  //! useCallback
-  // const Signin = useCallback (async (data: {email: string, password: string}) => {
-  //   setIsLoading(true);
-  //   const result = await authService.loginPost({email: data.email, password: data.password});
-  //   if (result) {
-  //     dispatch(login(result.access_token));
-  //   }
-  //   clearErrors();
-  //   setIsLoading(false);
-  //   return result;
-  // }, [{email: data.email, password: data.password}]);
-
-  const Signin = async (data: { email: string; password: string }) => {
-    setIsLoading(true);
-    const result = await authService.loginPost({
+  const loginRequest = async (data: { email: string; password: string }) =>
+    await authService.loginPost({
       email: data.email,
       password: data.password,
     });
-    if (result) {
-      dispatch(login(result.access_token));
-    }
-    clearErrors();
-    setIsLoading(false);
-    return result;
+
+  const loginQuery = useMutation(loginRequest, {
+    onSuccess: (data) => {
+      dispatch(login(data.access_token));
+      clearErrors();
+    },
+  });
+
+  const Signin = async (data: { email: string; password: string }) => {
+    await loginQuery.mutateAsync(data);
   };
 
   return (

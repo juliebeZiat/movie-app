@@ -2,9 +2,7 @@ import React, { FC, useState, useEffect } from "react";
 import {
   View,
   Text,
-  Button,
   FlatList,
-  ScrollView,
   TouchableOpacity,
   Image
 } from "react-native";
@@ -17,6 +15,7 @@ import movieService from "../services/movieService";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 import { color, dimensions, font, margin, radius } from "../styles";
+import { ScrollView } from "react-native-gesture-handler";
 
 const Welcome: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -37,9 +36,8 @@ const Welcome: FC = () => {
   return (
     <View style={{ flex: 1, alignItems: "center" }}>
       <ScrollView
-        showsVerticalScrollIndicator={false}
         style={{ width: dimensions.fullWidth - 50 }}
-        nestedScrollEnabled = {true}
+        showsVerticalScrollIndicator={false}
       >
         {/* // First element */}
         <TouchableOpacity onPress={() => navigate("Movie", { movieId: allMoviesList[0]._id })}>
@@ -97,6 +95,7 @@ const Welcome: FC = () => {
           keyExtractor={(item) => item._id}
           numColumns={2}
           columnWrapperStyle={{ flex: 1, justifyContent: "space-between" }}
+          style={{ height: 500 }}
           renderItem={({ item }) => (
             <TouchableOpacity
               onPress={() => navigate("Movie", { movieId: item._id })}

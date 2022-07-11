@@ -37,7 +37,8 @@ export const font = {
   md: 20,
   lg: 25,
   xlg: 30,
-  xxlg: 50
+  xxlg: 40,
+  xxxlg: 50
 }
 
 export const radius = {

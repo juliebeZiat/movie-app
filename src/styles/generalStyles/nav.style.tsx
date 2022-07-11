@@ -5,11 +5,8 @@ import { LargeLogo, Logo } from "./logo.style";
 import * as Icons from "react-native-heroicons/solid";
 import { padding } from "..";
 import { Nav } from "../../type/Nav";
-import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../../navigation/Navigation";
 
 export const NavStyleLogout: FC = () => {
-  const { navigate } = useNavigation<Nav>();
   const { colors } = useTheme();
   return (
     <View

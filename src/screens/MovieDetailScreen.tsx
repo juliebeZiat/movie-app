@@ -53,7 +53,7 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
                 }}
               />
             </View>
-            <ScrollView style={{ margin: margin.sm }}>
+            <ScrollView style={{ marginHorizontal: margin.sm, marginVertical: margin.xxlg }}>
               <TextTypography.Subtitle>{movie.title}</TextTypography.Subtitle>
               <View
                 style={{

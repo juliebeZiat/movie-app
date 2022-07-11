@@ -37,9 +37,8 @@ export const SwitchSystemTheme: FC = () => {
             <TextTypography.Text>System Theme</TextTypography.Text>
           </View>
           <Switch
-            trackColor={{ false: colors.background, true: colors.text }}
-            thumbColor={colors.background}
-            ios_backgroundColor={colors.background}
+            trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
+            thumbColor={"#f8f8f8"}
             onValueChange={toggleSystemTheme}
             value={isSystemThemeEnabled}
           />
@@ -49,8 +48,6 @@ export const SwitchSystemTheme: FC = () => {
 
 export const SwitchDarkTheme: FC = () => {
   const { isSystemThemeEnabled, isDarkTheme, toggleTheme } = useAppTheme();
-  const { colors } = useTheme();
-
   return (
     <View
       style={{
@@ -75,9 +72,8 @@ export const SwitchDarkTheme: FC = () => {
         )}
       </View>
       <Switch
-        trackColor={{ false: colors.background, true: colors.text }}
-        thumbColor={colors.background}
-        ios_backgroundColor={colors.background}
+        trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
+        thumbColor={"#f8f8f8"}
         onValueChange={toggleTheme}
         value={isDarkTheme}
         disabled={isSystemThemeEnabled}

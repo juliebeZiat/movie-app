@@ -4,8 +4,7 @@ import { View } from 'react-native';
 import { color, padding } from '..';
 import TextTypography from './text.typography';
 
-export const Logo: FC = () => {
-  const { colors } = useTheme();
+export const Logo = () => {
   return (
     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
       <TextTypography.Subtitle style={{ paddingTop: padding.xlg, paddingLeft: 15 }}>Logo</TextTypography.Subtitle>
@@ -16,7 +15,7 @@ export const Logo: FC = () => {
 
 export const LargeLogo = () => {
   return (
-    <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padding.md }}>
+    <View style={{ flexDirection: 'row', flexWrap: 'wrap', paddingTop: padding.sm }}>
       <TextTypography.Title>Logo</TextTypography.Title>
       <TextTypography.Title style={{ color: color.primary }}> .</TextTypography.Title>
     </View>

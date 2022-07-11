@@ -2,7 +2,7 @@ import { useNavigation } from "@react-navigation/native";
 import React, { FC } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { color, font, margin, radius } from "../../styles";
+import { color, font, margin, padding, radius } from "../../styles";
 import TextTypography from "../../styles/generalStyles/text.typography";
 import { Movie } from "../../type/movie";
 import { Nav } from "../../type/Nav";
@@ -25,7 +25,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
         keyExtractor={(item) => item._id}
         numColumns={2}
         columnWrapperStyle={{ flex: 1, justifyContent: "space-between" }}
-        style={{ height: 450 }}
+        style={{ height: 350 }}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigate("Movie", { movieId: item._id })}

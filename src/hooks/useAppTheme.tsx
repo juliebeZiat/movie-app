@@ -29,5 +29,12 @@ export const useAppTheme = () => {
     return theme === "LIGHT" ? lightTheme : darkTheme;
   }
 
-  return { toggleTheme, theme: getTheme(), isSystemThemeEnabled: theme === "SYSTEM", toggleSystemTheme, isDarkTheme: theme === "DARK" };
+  return {
+    toggleTheme,
+    toggleSystemTheme,
+    scheme,
+    theme: getTheme(),
+    isSystemThemeEnabled: theme === "SYSTEM",
+    isDarkTheme: theme === "DARK",
+  };
 }

@@ -34,9 +34,6 @@ const authSlice = createSlice({
       state.token = undefined;
       axios.defaults.headers.common = {};
     },
-    // toggleTheme: (state) => {
-    //   state.darkTheme = !state.darkTheme;
-    // },
     setTheme: (state: RootState, { payload }: PayloadAction<authState["theme"]>) => {
       state.theme = payload;
     }
@@ -45,6 +42,6 @@ const authSlice = createSlice({
 
 export const themeSelector = (state: RootState): authState["theme"] => state.auth.theme;
 
-export const { login, logout, toggleTheme, setTheme } = authSlice.actions;
+export const { login, logout, setTheme } = authSlice.actions;
 
 export default authSlice;

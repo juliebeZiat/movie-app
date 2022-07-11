@@ -9,5 +9,6 @@ export const lightTheme = {
     background: color.light,
     text: color.dark,
     border: 'white',
+    notification: 'darkgrey',
   }
 }

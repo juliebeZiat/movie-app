@@ -29,8 +29,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const Navigation: FC = () => {  
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
 
-  const {theme} = useAppTheme();
-
+  const { theme, isDarkTheme, scheme, isSystemThemeEnabled } = useAppTheme();
+  
   return (
     <NavigationContainer theme={theme}>
       <Stack.Navigator>
@@ -49,7 +49,7 @@ const Navigation: FC = () => {
               options={{
                 headerTransparent: true,
                 headerTitle: "",
-                headerTintColor: color.light,
+                headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
                 headerBackTitle: "",
               }}
             />
@@ -59,7 +59,7 @@ const Navigation: FC = () => {
               options={{
                 headerTransparent: true,
                 headerTitle: "",
-                headerTintColor: color.dark,
+                headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
                 headerBackTitle: "",
               }}
             />

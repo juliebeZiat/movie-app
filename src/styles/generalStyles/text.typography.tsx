@@ -34,6 +34,13 @@ const Error = ({style, ...props}: TextTypography) => (
   <Text {...props} style={[{ fontSize: font.sm, color: color.primary, marginLeft: margin.sm }, style]} />
 );
 
+const Disabled = ({style, ...props}: TextTypography) => {
+  const { colors } = useTheme();
+  return (
+    <TextNative {...props} style={[{ fontSize: font.md, color: colors.notification }, style]} />
+  )
+};
+
 
 const TextTypography = {
   Text,
@@ -42,6 +49,7 @@ const TextTypography = {
   Caption,
   LargeText,
   Error,
+  Disabled,
 }
 
 export default TextTypography;

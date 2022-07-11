@@ -8,6 +8,7 @@ export const darkTheme = {
     primary: color.primary,
     background: color.dark,
     text: color.light,
-    border: '#1B1B1B'
+    border: '#1B1B1B',
+    notification: '#777777',
   }
 }

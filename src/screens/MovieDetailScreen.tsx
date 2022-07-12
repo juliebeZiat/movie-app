@@ -10,9 +10,7 @@ import { useTheme } from "@react-navigation/native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 
-import { IQueryMovie } from "../type/queries";
-import { useQuery } from "react-query";
-import movieService from "../services/movieService";
+import { useFetchMovieQuery } from "../services/queries";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
 
@@ -20,15 +18,7 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
   const { colors } = useTheme();
   const { movieId } = route.params;
 
-  const fetchMovie = async (movieId: string) => {
-    const result = await movieService.fetchMovieService(movieId);
-    return result;
-  };
-
-  const { data, isLoading, isSuccess, isFetching } = useQuery<IQueryMovie, Error>(
-    ["movie", movieId],
-    () => fetchMovie(movieId)
-  );
+  const { data, isLoading, isSuccess, isFetching } = useFetchMovieQuery(movieId);
 
   if (!data) return null;
   if (isLoading || isFetching) return <LoadingIndicator />;

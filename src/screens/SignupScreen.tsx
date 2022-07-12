@@ -73,9 +73,9 @@ const Signin: FC = () => {
                 value: 4,
                 message: "Password must be longer than or equal to 4 characters"
               },
-              pattern: {
-                value: /(?=.*[A-Z])(?=.*[0-9])/,
-                message: "Password must contain at least one number and one uppercase",
+              validate: {
+                gotNumber: (value) => /([0-9])/.test(value) || "Password must contain at least one number",
+                gotUppercase: (value) => /([A-Z])/.test(value) || "Password must contain at least one uppercase",
               },
             }}
             render={({ field: { onChange, value }, fieldState: { error } }) => (

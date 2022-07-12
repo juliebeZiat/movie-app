@@ -5,46 +5,42 @@ import { margin, padding } from "../styles";
 import * as Icons from "react-native-heroicons/outline";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { Switch } from "react-native-gesture-handler";
-import { useTheme } from "@react-navigation/native";
-
 
 export const SwitchSystemTheme: FC = () => {
-
   const { toggleSystemTheme, isSystemThemeEnabled } = useAppTheme();
-  const { colors } = useTheme();
 
   return (
     <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            paddingBottom: padding.sm,
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center" }}>
-            {isSystemThemeEnabled ? (
-              <Icons.CubeIcon
-                color={"#ffc87c"}
-                style={{ marginRight: margin.sm }}
-              />
-            ) : (
-              <Icons.CubeIcon
-                color={"#aa7cff"}
-                style={{ marginRight: margin.sm }}
-              />
-            )}
-            <TextTypography.Text>System Theme</TextTypography.Text>
-          </View>
-          <Switch
-            trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
-            thumbColor={"#f8f8f8"}
-            onValueChange={toggleSystemTheme}
-            value={isSystemThemeEnabled}
+      style={{
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        paddingBottom: padding.sm,
+      }}
+    >
+      <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {isSystemThemeEnabled ? (
+          <Icons.CubeIcon
+            color={"#ffc87c"}
+            style={{ marginRight: margin.sm }}
           />
-        </View>
-  )
-}
+        ) : (
+          <Icons.CubeIcon
+            color={"#aa7cff"}
+            style={{ marginRight: margin.sm }}
+          />
+        )}
+        <TextTypography.Text>System Theme</TextTypography.Text>
+      </View>
+      <Switch
+        trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
+        thumbColor={"#f8f8f8"}
+        onValueChange={toggleSystemTheme}
+        value={isSystemThemeEnabled}
+      />
+    </View>
+  );
+};
 
 export const SwitchDarkTheme: FC = () => {
   const { isSystemThemeEnabled, isDarkTheme, toggleTheme } = useAppTheme();
@@ -80,4 +76,4 @@ export const SwitchDarkTheme: FC = () => {
       />
     </View>
   );
-}
+};

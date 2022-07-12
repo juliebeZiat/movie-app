@@ -1,8 +1,8 @@
-import React, { FC, useCallback, useState } from "react";
-import { useNavigation, useTheme } from "@react-navigation/native";
+import React, { FC } from "react";
+import { useNavigation } from "@react-navigation/native";
 import { useDispatch } from "react-redux";
 
-import { View, Text, ActivityIndicator, KeyboardAvoidingView, Pressable } from "react-native";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 
 import Input from "../components/Input";
 
@@ -34,97 +34,93 @@ const Home: FC = () => {
     }
   });
 
-  const loginRequest = async (data: { email: string; password: string }) =>
-    await authService.loginPost({
-      email: data.email,
-      password: data.password,
+  const loginQuery = useMutation(async (data: { email: string; password: string }) => await authService.loginPost({
+    email: data.email,
+    password: data.password,
+  }));
+
+  const handleSignin = async (data: { email: string; password: string }) => {
+    await loginQuery.mutateAsync(data, {
+      onSuccess: (data) => {
+        dispatch(login(data.access_token));
+        clearErrors();
+      },
     });
-
-  const loginQuery = useMutation(loginRequest, {
-    onSuccess: (data) => {
-      dispatch(login(data.access_token));
-      clearErrors();
-    },
-  });
-
-  const Signin = async (data: { email: string; password: string }) => {
-    await loginQuery.mutateAsync(data);
   };
 
   return (
-    <KeyboardAvoidingView
-      behavior="padding"
-      style={{ flex: 1 }}
-    >
-    <View style={{ justifyContent: 'space-evenly' }}>
-      <View style={{ padding: padding.md, marginVertical: margin.xxlg }}>
-        <TextTypography.Title style={{ marginBottom: margin.md }}>Authentication</TextTypography.Title>
-        <TextTypography.LargeText>
-          Login or register into your favorite movie app build for azot.dev
-          technical test
-        </TextTypography.LargeText>
-      </View>
-      <View style={{ alignItems: 'center' }}>
-        <Controller
-          control={control}
-          name="email"
-          rules={{
-            required: "Email should not be empty",
-            pattern: {
-              value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-              message: "Email must be an email",
-            },
-          }}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <Input
-              error={!!error}
-              placeholder="Email"
-              value={value}
-              onChangeText={onChange}
-              errorDetails={error?.message}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="password"
-          rules={{
-            required: "Password should not be empty",
-            minLength: {
-              value: 4,
-              message: "Password must be longer than or equal to 4 characters"
-            },
-            pattern: {
-              value: /(?=.*[A-Z])(?=.*[0-9])/,
-              message: "Password must contain at least one number and one uppercase",
-            },
-          }}
-          render={({ field: { onChange, value }, fieldState: { error } }) => (
-            <Input
-              placeholder="Password"
-              value={value}
-              onChangeText={onChange}
-              secureTextEntry
-              error={!!error}
-              errorDetails={error?.message}
-            />
-          )}
-        />
-      
-        <View style={{ marginTop: margin.lg, marginBottom: margin.lg }}>
-          <ButtonTypography.Large onPress={handleSubmit(Signin)}>
-            <Text>Authenticate</Text>
-          </ButtonTypography.Large>
+    <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+      <View style={{ justifyContent: "space-evenly" }}>
+        <View style={{ padding: padding.md, marginVertical: margin.xxlg }}>
+          <TextTypography.Title style={{ marginBottom: margin.md }}>
+            Authentication
+          </TextTypography.Title>
+          <TextTypography.LargeText>
+            Login or register into your favorite movie app build for azot.dev
+            technical test
+          </TextTypography.LargeText>
         </View>
-        {loginQuery.isLoading && <ActivityIndicator />}
+        <View style={{ alignItems: "center" }}>
+          <Controller
+            control={control}
+            name="email"
+            rules={{
+              required: "Email should not be empty",
+              pattern: {
+                value: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                message: "Email must be an email",
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Input
+                error={!!error}
+                placeholder="Email"
+                value={value}
+                onChangeText={onChange}
+                errorDetails={error?.message}
+              />
+            )}
+          />
 
-        <ButtonTypography onPress={() => navigate("Signup")}>
-          <Text>Don't have an account yet ? Register here.</Text>
-        </ButtonTypography>
+          <Controller
+            control={control}
+            name="password"
+            rules={{
+              required: "Password should not be empty",
+              minLength: {
+                value: 4,
+                message:
+                  "Password must be longer than or equal to 4 characters",
+              },
+              validate: {
+                gotNumber: (value) => /([0-9])/.test(value) || "Password must contain at least one number",
+                gotUppercase: (value) => /([A-Z])/.test(value) || "Password must contain at least one uppercase",
+              },
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <Input
+                placeholder="Password"
+                value={value}
+                onChangeText={onChange}
+                secureTextEntry
+                error={!!error}
+                errorDetails={error?.message}
+              />
+            )}
+          />
 
+          <View style={{ marginTop: margin.lg, marginBottom: margin.lg }}>
+            <ButtonTypography.Large onPress={handleSubmit(handleSignin)}>
+              <Text>Authenticate</Text>
+            </ButtonTypography.Large>
+          </View>
+          {loginQuery.isLoading && <ActivityIndicator />}
+
+          <ButtonTypography onPress={() => navigate("Signup")}>
+            <Text>Don't have an account yet ? Register here.</Text>
+          </ButtonTypography>
+        </View>
       </View>
-    </View>
     </KeyboardAvoidingView>
   );
 };

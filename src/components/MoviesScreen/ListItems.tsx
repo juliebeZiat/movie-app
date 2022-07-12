@@ -1,8 +1,10 @@
+import { Picker } from "@react-native-picker/picker";
 import { useNavigation } from "@react-navigation/native";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { color, font, margin, padding, radius } from "../../styles";
+import { getGenreArray } from "../../functions/getGenreArray";
+import { color, font, margin, radius } from "../../styles";
 import TextTypography from "../../styles/generalStyles/text.typography";
 import { Movie } from "../../type/movie";
 import { Nav } from "../../type/Nav";
@@ -14,21 +16,37 @@ interface IListItems {
 export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
   const { navigate } = useNavigation<Nav>();
 
+  const movies = allMoviesList.map((movie) => {
+    return movie.genre_ids.map((genre) => {
+      return genre.name
+    });
+  });
+
+  const [selectedValue, setselectedValue] = useState('');
+  const filteredData = allMoviesList.filter((movie) => movie.genre_ids.map((genre) => {return genre.name}).includes(selectedValue));
+
   return (
     <>
       <TextTypography.Subtitle style={{ marginVertical: margin.sm }}>
         Movies
       </TextTypography.Subtitle>
 
+      <Picker selectedValue={selectedValue} onValueChange={(itemValue, itemIndex) => setselectedValue(itemValue)}>
+        <Picker.Item label="All movies" value="all"/>
+        {getGenreArray(movies).map((genre) => {
+            return <Picker.Item key={genre} label={genre} value={genre} />
+        })}
+      </Picker>
+
       <FlatList
-        data={allMoviesList?.slice(1, allMoviesList.length)}
+        data={(selectedValue === "all" ? allMoviesList : filteredData)}
         keyExtractor={(item) => item._id}
         numColumns={2}
         columnWrapperStyle={{ flex: 1, justifyContent: "space-between" }}
         style={{ height: 350 }}
         renderItem={({ item }) => (
           <TouchableOpacity
-            onPress={() => navigate("Movie", { movieId: item._id })}
+          onPress={() => navigate("Movie", { movieId: item._id })}
           >
             <View style={{ marginBottom: margin.lg }}>
               <Image

@@ -2,12 +2,12 @@ import axios from "axios";
 import { Endpoints } from "../type/endpoints";
 
 const fetchMovieService = async (movieId: string) => {
-  const response = await axios.get<Endpoints.GetMovie.Response>(`movies/${movieId}`);
+  const response = await axios.get<Endpoints.GetMovie.Response>(`movie/${movieId}`);
   return response;
 };
 
 const fetchAllMoviesService = async () => {
-  const response = await axios.get<Endpoints.ListMovies.Response>('movies/popular');
+  const response = await axios.get<Endpoints.ListMovies.Response>('movie/popular');
   return response;
 };
 

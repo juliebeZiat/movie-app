@@ -42,7 +42,7 @@ const Home: FC = () => {
   const handleSignin = async (data: { email: string; password: string }) => {
     await loginQuery.mutateAsync(data, {
       onSuccess: (data) => {
-        dispatch(login(data.access_token));
+        // dispatch(login(data.access_token));
         clearErrors();
       },
     });

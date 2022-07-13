@@ -2,7 +2,7 @@ export type Movie = {
   _id: string;
   backdrop_path: string;
   poster_path: string;
-  genre_ids: {
+  genres: {
     id: number;
     name: string;
   }[];

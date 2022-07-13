@@ -56,7 +56,7 @@ const MovieDetail: FC<Props> = ({ route }: Props) => {
                 <TextTypography.Caption>
                   {new Date(movie.release_date).getFullYear() + " - "}
                 </TextTypography.Caption>
-                {movie.genre_ids.map((genre) => {
+                {movie.genres.map((genre) => {
                   return (
                     <TextTypography.Caption key={genre.id}>
                       {genre.name.toUpperCase() + " "}

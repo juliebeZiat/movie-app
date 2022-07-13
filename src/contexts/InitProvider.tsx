@@ -9,13 +9,14 @@ const InitProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
 
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
 
-  const token = useSelector((state: RootState) => state.auth.token);
+  // const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
     axios.defaults.baseURL = API_URL;
-    if (token) {
-      axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
-    }
+    // if (token) {
+    //   axios.defaults.headers.common = {'Authorization': `Bearer ${token}`};
+    // }
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
     setIsLoaded(true);
   }, []);
 

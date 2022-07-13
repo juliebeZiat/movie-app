@@ -17,13 +17,13 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
   const { navigate } = useNavigation<Nav>();
 
   const movies = allMoviesList.map((movie) => {
-    return movie.genre_ids.map((genre) => {
+    return movie.genres.map((genre) => {
       return genre.name
     });
   });
 
-  const [selectedValue, setselectedValue] = useState('');
-  const filteredData = allMoviesList.filter((movie) => movie.genre_ids.map((genre) => {return genre.name}).includes(selectedValue));
+  const [selectedValue, setselectedValue] = useState('all');
+  const filteredData = allMoviesList.filter((movie) => movie.genres.map((genre) => {return genre.name}).includes(selectedValue));
 
   return (
     <>
@@ -31,7 +31,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
         Movies
       </TextTypography.Subtitle>
 
-      <Picker selectedValue={selectedValue} onValueChange={(itemValue, itemIndex) => setselectedValue(itemValue)}>
+      <Picker selectedValue={selectedValue} onValueChange={(itemValue) => setselectedValue(itemValue)}>
         <Picker.Item label="All movies" value="all"/>
         {getGenreArray(movies).map((genre) => {
             return <Picker.Item key={genre} label={genre} value={genre} />
@@ -84,7 +84,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
                     flexWrap: "wrap",
                   }}
                 >
-                  {item.genre_ids.map((genre) => {
+                  {item.genres.map((genre) => {
                     return (
                       <TextTypography.Caption
                         style={{ color: color.light }}

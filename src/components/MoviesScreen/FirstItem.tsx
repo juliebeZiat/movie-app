@@ -42,7 +42,7 @@ export const FirstItemMoviesScreen: FC<IItem> = ({ allMoviesList }: IItem) => {
                 marginBottom: margin.sm,
               }}
             >
-              {allMoviesList[0].genre_ids.map((genre) => {
+              {allMoviesList[0].genres.map((genre) => {
                 return (
                   <TextTypography.Caption
                     style={{ color: color.light, fontSize: font.sm }}

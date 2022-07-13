@@ -37,54 +37,47 @@ const Navigation: FC = () => {
       <StatusBar style={isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? "light" : "dark"} />
       <NavigationContainer theme={theme}>
         <Stack.Navigator>
-          {isLogged ? (
-            <>
-              <Stack.Screen
-                name="Home"
-                component={Home}
-                options={{
-                  header: () => <NavStyleLogin />,
-                }}
-              />
-              <Stack.Screen
-                name="Movie"
-                component={MovieDetail}
-                options={{
-                  headerTransparent: true,
-                  headerTitle: "",
-                  headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
-                  headerBackTitle: "",
-                }}
-              />
-              <Stack.Screen
-                name="Settings"
-                component={Settings}
-                options={{
-                  headerTransparent: true,
-                  headerTitle: "",
-                  headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
-                  headerBackTitle: "",
-                }}
-              />
-            </>
-          ) : (
-            <>
-              <Stack.Screen
-                name="Signin"
-                component={Signin}
-                options={{
-                  header: () => <NavStyleLogout />,
-                }}
-              />
-              <Stack.Screen
-                name="Signup"
-                component={Signup}
-                options={{
-                  header: () => <NavStyleLogout />,
-                }}
-              />
-            </>
-          )}
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{
+              header: () => <NavStyleLogin />,
+            }}
+          />
+          <Stack.Screen
+            name="Movie"
+            component={MovieDetail}
+            options={{
+              headerTransparent: true,
+              headerTitle: "",
+              headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
+              headerBackTitle: "",
+            }}
+          />
+          <Stack.Screen
+            name="Settings"
+            component={Settings}
+            options={{
+              headerTransparent: true,
+              headerTitle: "",
+              headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
+              headerBackTitle: "",
+            }}
+          />
+          <Stack.Screen
+            name="Signin"
+            component={Signin}
+            options={{
+              header: () => <NavStyleLogout />,
+            }}
+          />
+          <Stack.Screen
+            name="Signup"
+            component={Signup}
+            options={{
+              header: () => <NavStyleLogout />,
+            }}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </>

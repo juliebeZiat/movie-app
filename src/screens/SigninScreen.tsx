@@ -1,6 +1,5 @@
 import React, { FC } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { useDispatch } from "react-redux";
 
 import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
 
@@ -8,7 +7,6 @@ import Input from "../components/Input";
 
 import { Nav } from "../type/Nav";
 
-import { login } from "../state/reducer/auth.reducer";
 import authService from "../services/authService";
 import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 
@@ -20,7 +18,6 @@ import { useMutation } from "react-query";
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
-  const dispatch = useDispatch();
 
   type FormValues = {
     email: string;

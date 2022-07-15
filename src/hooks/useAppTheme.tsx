@@ -1,7 +1,6 @@
-import React, { useState } from "react";
 import { useColorScheme } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
-import { setTheme, THEMES, themeSelector } from "../state/reducer/auth.reducer";
+import { setTheme, themeSelector } from "../state/reducer/auth.reducer";
 import { darkTheme } from "../styles/themes/dark";
 import { lightTheme } from "../styles/themes/light";
 

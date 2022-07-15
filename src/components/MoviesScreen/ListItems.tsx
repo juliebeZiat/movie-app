@@ -1,5 +1,5 @@
 import { Picker } from "@react-native-picker/picker";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useTheme } from "@react-navigation/native";
 import React, { FC, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
@@ -15,6 +15,7 @@ interface IListItems {
 
 export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
   const { navigate } = useNavigation<Nav>();
+  const { colors } = useTheme();
 
   const movies = allMoviesList.map((movie) => {
     return movie.genres.map((genre) => {
@@ -27,11 +28,16 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
 
   return (
     <>
-      <TextTypography.Subtitle style={{ marginVertical: margin.sm }}>
+      <TextTypography.Subtitle style={{ marginTop: margin.sm }}>
         Movies
       </TextTypography.Subtitle>
 
-      <Picker selectedValue={selectedValue} onValueChange={(itemValue) => setselectedValue(itemValue)}>
+      <Picker
+        selectedValue={selectedValue}
+        onValueChange={(itemValue) => setselectedValue(itemValue)}
+        style={{ height: 88 }}
+        itemStyle={{ height: 88, color: colors.text }}
+      >
         <Picker.Item label="All movies" value="all"/>
         {getGenreArray(movies).map((genre) => {
             return <Picker.Item key={genre} label={genre} value={genre} />

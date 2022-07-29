@@ -15,9 +15,12 @@ import { Controller, useForm } from "react-hook-form";
 import { margin, padding } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { useMutation } from "react-query";
+import { useDispatch } from "react-redux";
+import { login } from "../state/reducer/auth.reducer";
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
+  const dispatch = useDispatch();
 
   type FormValues = {
     email: string;
@@ -39,7 +42,7 @@ const Home: FC = () => {
   const handleSignin = async (data: { email: string; password: string }) => {
     await loginQuery.mutateAsync(data, {
       onSuccess: (data) => {
-        // dispatch(login(data.access_token));
+        dispatch(login(data.access_token));
         clearErrors();
       },
     });
@@ -112,7 +115,6 @@ const Home: FC = () => {
             </ButtonTypography.Large>
           </View>
           {loginQuery.isLoading && <ActivityIndicator />}
-
           <ButtonTypography onPress={() => navigate("Signup")}>
             <Text>Don't have an account yet ? Register here.</Text>
           </ButtonTypography>

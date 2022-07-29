@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import { View } from "react-native";
-import { dimensions } from "../styles";
+import { dimensions, margin } from "../styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { FirstItemMoviesScreen } from "../components/MoviesScreen/FirstItem";
@@ -17,7 +17,7 @@ const Welcome: FC = () => {
   const allMoviesList = data.data;
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
+    <View style={{ flex: 1, alignItems: "center", marginTop: margin.xxlg }}>
       {isSuccess && data ? (
         <SafeAreaView style={{ width: dimensions.fullWidth - 50 }}>
           <FirstItemMoviesScreen allMoviesList={allMoviesList} />

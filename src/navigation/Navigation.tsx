@@ -15,6 +15,8 @@ import { NavStyleLogin, NavStyleLogout } from "../styles/generalStyles/nav.style
 import { color } from "../styles";
 import { useAppTheme } from "../hooks/useAppTheme";
 import { StatusBar } from "expo-status-bar";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import UserList from "../screens/UserList";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -25,60 +27,99 @@ export type RootStackParamList = {
   Root: undefined;
 };
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+// const Stack = createNativeStackNavigator<RootStackParamList>();
+const Drawer = createDrawerNavigator();
 
-const Navigation: FC = () => {  
+const Navigation: FC = () => {
   const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const { theme, isDarkTheme, scheme, isSystemThemeEnabled } = useAppTheme();
-  
+
   return (
     <>
-      <StatusBar style={isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? "light" : "dark"} />
+      <StatusBar
+        style={
+          isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+            ? "light"
+            : "dark"
+        }
+      />
       <NavigationContainer theme={theme}>
-        <Stack.Navigator>
-          <Stack.Screen
+        <Drawer.Navigator>
+          {isLogged ? (
+            <>
+              <Drawer.Screen
+                name="My List"
+                component={UserList}
+                options={{
+                  headerTransparent: true,
+                  headerTitle: "",
+                  headerTintColor:
+                    isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                      ? color.light
+                      : color.dark,
+                }}
+              />
+              <Drawer.Screen
+                name="Settings"
+                component={Settings}
+                options={{
+                  headerTransparent: true,
+                  headerTitle: "",
+                  headerTintColor:
+                    isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                      ? color.light
+                      : color.dark,
+                }}
+              />
+            </>
+          ) : (
+            <>
+              <Drawer.Screen
+                name="Signin"
+                component={Signin}
+                options={{
+                  header: () => <NavStyleLogout />,
+                }}
+              />
+              <Drawer.Screen
+                name="Signup"
+                component={Signup}
+                options={{
+                  header: () => <NavStyleLogout />,
+                }}
+              />
+            </>
+          )}
+          <Drawer.Screen 
+            navigationKey={isLogged ? "user" : "guest"}
             name="Home"
             component={Home}
+            // options={{header: () => <NavStyleLogin />}} 
             options={{
-              header: () => <NavStyleLogin />,
+              headerTransparent: true,
+              headerTitle: "",
+              headerTintColor:
+                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                  ? color.light
+                  : color.dark,
             }}
           />
-          <Stack.Screen
+          <Drawer.Screen
+            navigationKey={isLogged ? "user" : "guest"}
             name="Movie"
             component={MovieDetail}
             options={{
+              drawerItemStyle: { height: 0 },
               headerTransparent: true,
               headerTitle: "",
-              headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
-              headerBackTitle: "",
+              headerTintColor:
+                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                  ? color.light
+                  : color.dark,
             }}
           />
-          <Stack.Screen
-            name="Settings"
-            component={Settings}
-            options={{
-              headerTransparent: true,
-              headerTitle: "",
-              headerTintColor: isDarkTheme || (isSystemThemeEnabled && scheme === 'dark') ? color.light : color.dark,
-              headerBackTitle: "",
-            }}
-          />
-          <Stack.Screen
-            name="Signin"
-            component={Signin}
-            options={{
-              header: () => <NavStyleLogout />,
-            }}
-          />
-          <Stack.Screen
-            name="Signup"
-            component={Signup}
-            options={{
-              header: () => <NavStyleLogout />,
-            }}
-          />
-        </Stack.Navigator>
+        </Drawer.Navigator>
       </NavigationContainer>
     </>
   );

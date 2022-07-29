@@ -12,7 +12,7 @@ import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 
 import { Controller, useForm } from "react-hook-form";
 
-import { margin, padding } from "../styles";
+import { font, margin, padding, color } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { useMutation } from "react-query";
 import { useDispatch } from "react-redux";
@@ -115,6 +115,11 @@ const Home: FC = () => {
             </ButtonTypography.Large>
           </View>
           {loginQuery.isLoading && <ActivityIndicator />}
+          {loginQuery.isError && (
+            <TextTypography.Text style={{ textAlign: 'center', fontSize: font.md, color: color.primary, marginBottom: margin.md }}>
+              Wrong email or password
+            </TextTypography.Text>
+          )}
           <ButtonTypography onPress={() => navigate("Signup")}>
             <Text>Don't have an account yet ? Register here.</Text>
           </ButtonTypography>

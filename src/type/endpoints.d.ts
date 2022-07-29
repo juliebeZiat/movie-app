@@ -12,6 +12,18 @@ export namespace Endpoints {
     }
   }
 
+  export namespace SignUp {
+    export type Request = {
+      name: string,
+      email: string,
+      password: string
+    }
+
+    export type Response = {
+      access_token: string
+    }
+  }
+
   export namespace ListMovies {
     export type Request = void
 

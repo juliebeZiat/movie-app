@@ -7,6 +7,7 @@ import Navigation from './navigation/Navigation';
 import { store } from './state/store';
 import InitProvider from './contexts/InitProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 
 let persistor = persistStore(store);
 const queryClient = new QueryClient;
@@ -21,6 +22,7 @@ const App: FC = () =>  {
           </InitProvider>
         </PersistGate>
       </ReduxProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );
 }

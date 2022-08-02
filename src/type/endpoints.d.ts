@@ -1,4 +1,5 @@
 import { Movie } from "./movie"
+import { UserList } from "./userlist"
 
 export namespace Endpoints {
   export namespace Login {
@@ -36,5 +37,11 @@ export namespace Endpoints {
     }
 
     export type Response = Movie
+  }
+
+  export namespace GetUserList {
+    export type Request = void
+
+    export type Response = UserList
   }
 }

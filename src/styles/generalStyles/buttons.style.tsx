@@ -2,6 +2,7 @@ import { useTheme } from '@react-navigation/native';
 import React from 'react';
 import { PressableProps, View } from 'react-native';
 import { Pressable, Text, TextProps } from 'react-native';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { color, font, margin, padding, radius } from '..';
 
 interface ButtonTypography extends PressableProps {

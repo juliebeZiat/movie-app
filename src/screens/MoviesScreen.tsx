@@ -20,7 +20,7 @@ const Welcome: FC = () => {
     <View style={{ flex: 1, alignItems: "center", marginTop: margin.xxlg }}>
       {isSuccess && data ? (
         <SafeAreaView style={{ width: dimensions.fullWidth - 50 }}>
-          <FirstItemMoviesScreen allMoviesList={allMoviesList} />
+          {/* <FirstItemMoviesScreen allMoviesList={allMoviesList} /> */}
           <ListItems allMoviesList={allMoviesList} />
         </SafeAreaView>
       ) : (

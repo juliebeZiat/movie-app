@@ -46,7 +46,6 @@ const appSlice = createSlice({
   }
 });
 
-// export const movieSelector = (state: RootState, movieId) => state.app.isMovieInList.find(movie => movie._id == movieId);
 export const themeSelector = (state: RootState): appState["theme"] => state.app.theme;
 
 export const { setTheme, addMovieInList, removeMovieInList, setUserList } = appSlice.actions;

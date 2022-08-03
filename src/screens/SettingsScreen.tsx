@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Pressable, View } from "react-native";
 import * as Icons from "react-native-heroicons/outline";
-import { margin, padding } from "../styles";
+import { color, margin, padding } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { useDispatch } from "react-redux";
 
@@ -58,7 +58,7 @@ const Settings: FC = () => {
           style={{ flexDirection: "row", alignItems: "center" }}
         >
           <Icons.LogoutIcon
-            color={isDarkTheme ? "#7cffde" : "#50b79e"}
+            color={isDarkTheme ? color.green : color.darkgreen}
             style={{ marginRight: margin.sm }}
           />
           <TextTypography.LargeText>Logout</TextTypography.LargeText>

@@ -49,7 +49,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
         keyExtractor={(item) => item._id}
         numColumns={2}
         columnWrapperStyle={{ flex: 1, justifyContent: "space-between" }}
-        style={{ height: 350 }}
+        style={{ marginBottom: 100 }}
         renderItem={({ item }) => (
           <TouchableOpacity
           onPress={() => navigate("Movie", { movieId: item._id })}

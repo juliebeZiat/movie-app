@@ -3,8 +3,10 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import { Pressable, View } from "react-native";
 import { LargeLogo, Logo } from "./logo.style";
 import * as Icons from "react-native-heroicons/solid";
-import { padding } from "..";
+import { margin, padding } from "..";
 import { Nav } from "../../type/Nav";
+import { ChevronLeftIcon } from "react-native-heroicons/outline";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export const NavStyleLogout: FC = () => {
   const { colors } = useTheme();
@@ -25,7 +27,6 @@ export const NavStyleLogout: FC = () => {
 };
 
 export const NavStyleLogin: FC = () => {
-  const { navigate } = useNavigation<Nav>();
   const { colors } = useTheme();
   return (
     <View
@@ -39,9 +40,24 @@ export const NavStyleLogin: FC = () => {
       }}
     >
       <Logo />
-      <Pressable onPress={() => navigate("Settings")} style={{ padding: padding.xlg }}>
-        <Icons.CogIcon color={colors.text} />
-      </Pressable>
     </View>
   );
 };
+
+export const NavMovieDetail: FC = () => {
+  const { navigate } = useNavigation<Nav>();
+  const { colors } = useTheme();
+
+  return (
+    <View style={{
+      marginTop: 55,
+      marginLeft: margin.tiny,
+    }}>
+      <TouchableOpacity onPress={() => navigate("Home")}>
+        <ChevronLeftIcon color={colors.text} size={25} />
+      </TouchableOpacity>
+    </View>
+  )
+}
+
+

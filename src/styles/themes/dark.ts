@@ -5,7 +5,7 @@ export const darkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: color.primary,
+    primary: color.purple,
     background: color.dark,
     text: color.light,
     border: '#1B1B1B',

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { FC } from "react";
 import { ActivityIndicator, View, StyleSheet, Text } from 'react-native';
 
 export function LoadingIndicator() {

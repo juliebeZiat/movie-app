@@ -9,7 +9,14 @@ export const color  = {
   primary: '#E50909',
   secondary: '#F2F2F2',
   dark: '#030303',
-  light: '#FBF9FF'
+  light: '#FBF9FF',
+  orange: '#ffc87c',
+  purple: '#aa7cff',
+  darkpurple: '#776992',
+  darkgreen: '#50b79e',
+  green: '#7cffde',
+  lightgrey: "#b4b4b4",
+  offwhite: "#f8f8f8",
 }
 
 export const padding = {

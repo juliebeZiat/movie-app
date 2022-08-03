@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { View } from "react-native";
 import { useAppTheme } from "../hooks/useAppTheme";
-import { margin, padding } from "../styles";
+import { color, margin, padding } from "../styles";
 import * as Icons from "react-native-heroicons/outline";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { Switch } from "react-native-gesture-handler";
@@ -21,20 +21,20 @@ export const SwitchSystemTheme: FC = () => {
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         {isSystemThemeEnabled ? (
           <Icons.CubeIcon
-            color={"#ffc87c"}
+            color={color.orange}
             style={{ marginRight: margin.sm }}
           />
         ) : (
           <Icons.CubeIcon
-            color={"#aa7cff"}
+            color={color.purple}
             style={{ marginRight: margin.sm }}
           />
         )}
         <TextTypography.Text>System Theme</TextTypography.Text>
       </View>
       <Switch
-        trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
-        thumbColor={"#f8f8f8"}
+        trackColor={{ false: color.lightgrey, true: color.orange }}
+        thumbColor={color.offwhite}
         onValueChange={toggleSystemTheme}
         value={isSystemThemeEnabled}
       />
@@ -54,10 +54,10 @@ export const SwitchDarkTheme: FC = () => {
     >
       <View style={{ flexDirection: "row", alignItems: "center" }}>
         {isDarkTheme ? (
-          <Icons.SunIcon color={"#ffc87c"} style={{ marginRight: margin.sm }} />
+          <Icons.SunIcon color={color.orange} style={{ marginRight: margin.sm }} />
         ) : (
           <Icons.MoonIcon
-            color={!isSystemThemeEnabled ? "#aa7cff" : "#776992"}
+            color={!isSystemThemeEnabled ? color.purple : color.darkpurple}
             style={{ marginRight: margin.sm }}
           />
         )}
@@ -68,8 +68,8 @@ export const SwitchDarkTheme: FC = () => {
         )}
       </View>
       <Switch
-        trackColor={{ false: "#b4b4b4", true: "#ffc87c" }}
-        thumbColor={"#f8f8f8"}
+        trackColor={{ false: color.lightgrey, true: color.orange }}
+        thumbColor={color.offwhite}
         onValueChange={toggleTheme}
         value={isDarkTheme}
         disabled={isSystemThemeEnabled}

@@ -1,7 +1,6 @@
 import "react-native-gesture-handler";
 import React, { FC } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
@@ -11,12 +10,13 @@ import Signup from "../screens/SignupScreen";
 import MovieDetail from "../screens/MovieDetailScreen";
 import Settings from "../screens/SettingsScreen";
 
-import { NavStyleLogin, NavStyleLogout } from "../styles/generalStyles/nav.style";
+import { NavMovieDetail, NavStyleLogout } from "../styles/generalStyles/nav.style";
 import { color } from "../styles";
 import { useAppTheme } from "../hooks/useAppTheme";
 import { StatusBar } from "expo-status-bar";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import UserList from "../screens/UserList";
+import { CogIcon, HeartIcon, HomeIcon } from "react-native-heroicons/outline";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -27,7 +27,6 @@ export type RootStackParamList = {
   Root: undefined;
 };
 
-// const Stack = createNativeStackNavigator<RootStackParamList>();
 const Drawer = createDrawerNavigator();
 
 const Navigation: FC = () => {
@@ -46,6 +45,22 @@ const Navigation: FC = () => {
       />
       <NavigationContainer theme={theme}>
         <Drawer.Navigator>
+        <Drawer.Screen 
+            navigationKey={isLogged ? "user" : "guest"}
+            name="Home"
+            component={Home}
+            options={{
+              headerTransparent: true,
+              headerTitle: "",
+              drawerIcon: ({focused}) => (
+                <HomeIcon color={focused ? color.purple : "lightgrey" }/>
+              ),
+              headerTintColor:
+                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                  ? color.light
+                  : color.dark,
+            }}
+          />
           {isLogged ? (
             <>
               <Drawer.Screen
@@ -54,6 +69,9 @@ const Navigation: FC = () => {
                 options={{
                   headerTransparent: true,
                   headerTitle: "",
+                  drawerIcon: ({focused}) => (
+                    <HeartIcon color={focused ? color.purple : "lightgrey" }/>
+                  ),
                   headerTintColor:
                     isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
                       ? color.light
@@ -66,6 +84,9 @@ const Navigation: FC = () => {
                 options={{
                   headerTransparent: true,
                   headerTitle: "",
+                  drawerIcon: ({focused}) => (
+                    <CogIcon color={focused ? color.purple : "lightgrey" }/>
+                  ),
                   headerTintColor:
                     isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
                       ? color.light
@@ -91,20 +112,6 @@ const Navigation: FC = () => {
               />
             </>
           )}
-          <Drawer.Screen 
-            navigationKey={isLogged ? "user" : "guest"}
-            name="Home"
-            component={Home}
-            // options={{header: () => <NavStyleLogin />}} 
-            options={{
-              headerTransparent: true,
-              headerTitle: "",
-              headerTintColor:
-                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
-                  ? color.light
-                  : color.dark,
-            }}
-          />
           <Drawer.Screen
             navigationKey={isLogged ? "user" : "guest"}
             name="Movie"
@@ -112,13 +119,10 @@ const Navigation: FC = () => {
             options={{
               drawerItemStyle: { height: 0 },
               headerTransparent: true,
-              headerTitle: "",
-              headerTintColor:
-                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
-                  ? color.light
-                  : color.dark,
+              header: () => <NavMovieDetail />
             }}
           />
+          
         </Drawer.Navigator>
       </NavigationContainer>
     </>

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { Image, ImageBackground, ScrollView, Text, View } from "react-native";
 import TextTypography from "../styles/generalStyles/text.typography";
-import { dimensions, margin, radius, color } from "../styles";
+import { dimensions, margin, radius } from "../styles";
 
 import { countStars } from "../functions/convertNoteToStars";
 import { LoadingIndicator } from "../components/LoadingIndicator";
@@ -9,17 +9,16 @@ import { LoadingIndicator } from "../components/LoadingIndicator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 
-import { useFetchMovieQuery, useFetchUserList } from "../services/queries";
-import { ButtonTypography } from "../styles/generalStyles/buttons.style";
+import { useFetchMovieQuery } from "../services/queries";
 import { useMutation, useQueryClient } from "react-query";
 import userService from "../services/userService";
 import { useRoute, useTheme } from "@react-navigation/native";
 
-import { PlusIcon } from "react-native-heroicons/solid";
-import { CheckIcon } from "react-native-heroicons/solid";
+
 import { useDispatch, useSelector } from "react-redux";
 import { addMovieInList, removeMovieInList } from "../state/reducer/app.reducer";
 import { RootState } from "../state/store";
+import { AddItem, RemoveItem } from "../components/MoviesScreen/AddRemoveItem";
 
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
@@ -28,6 +27,9 @@ const MovieDetail: FC<Props> = () => {
   const dispatch = useDispatch();
   const { colors } = useTheme();
   const queryClient = useQueryClient();
+
+  // isUser logged
+  const isLogged = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   // Fetch movie detail
   const { params: { movieId } } = useRoute<Props['route']>();
@@ -82,16 +84,13 @@ const MovieDetail: FC<Props> = () => {
           imageStyle={{ opacity: 0.3 }}
         >
           <View style={{ height: dimensions.fullHeight, marginTop: 100 }}>
-
-            {!isMovieInList ? (
-              <ButtonTypography.Icon onPress={() => add({movieId: movie._id})}>
-                <PlusIcon color={color.light} />
-              </ButtonTypography.Icon>
-            ) : (
-              <ButtonTypography.Icon onPress={() => remove({movieId: movie._id})}>
-                <CheckIcon color={color.light} />
-              </ButtonTypography.Icon>
-            )}
+            <View style={{ alignItems: "flex-end", marginRight: margin.md }}>
+              {isLogged && (!isMovieInList ? (
+                <AddItem onPress={() => add({movieId: movie._id})} />
+              ) : (
+                <RemoveItem onPress={() => remove({movieId: movie._id})} />
+              ))}
+            </View>
             
             <View style={{ alignItems: "center", margin: margin.md }}>
               <Image
@@ -104,7 +103,8 @@ const MovieDetail: FC<Props> = () => {
             <ScrollView
               style={{
                 marginHorizontal: margin.sm,
-                marginVertical: margin.xxlg,
+                marginVertical: margin.xlg,
+
               }}
             >
               <TextTypography.Subtitle>{movie.title}</TextTypography.Subtitle>
@@ -127,6 +127,7 @@ const MovieDetail: FC<Props> = () => {
                   );
                 })}
               </View>
+
               <View style={{ flexDirection: "row", marginVertical: margin.sm }}>
                 {countStars(Math.round(movie.vote_average / 2))}
               </View>

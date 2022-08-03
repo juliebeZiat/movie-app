@@ -5,7 +5,7 @@ export const lightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: color.primary,
+    primary: color.purple,
     background: color.light,
     text: color.dark,
     border: 'white',

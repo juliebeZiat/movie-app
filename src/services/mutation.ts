@@ -1,10 +1,8 @@
 import { useMutation } from "react-query";
-import authService from "./authService";
+import userService from "./userService";
 
-//! DONT WORK
-export const loginMutation = (email: string, password: string) => {
+export const useAddMovie = () => {
   return useMutation(
-    async (data: { email: string; password: string }) =>
-      await authService.loginPost({ email: data.email, password: data.password })
+    async (movie: { movieId: string }) => await userService.addMovie(movie)
   );
-};
+}

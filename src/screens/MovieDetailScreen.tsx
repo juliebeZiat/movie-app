@@ -9,44 +9,64 @@ import { LoadingIndicator } from "../components/LoadingIndicator";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/Navigation";
 
-import { useFetchMovieQuery } from "../services/queries";
+import { useFetchMovieQuery, useFetchUserList } from "../services/queries";
 import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 import { useMutation, useQueryClient } from "react-query";
 import userService from "../services/userService";
 import { useRoute, useTheme } from "@react-navigation/native";
 
 import { PlusIcon } from "react-native-heroicons/solid";
+import { CheckIcon } from "react-native-heroicons/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { addMovieInList } from "../state/reducer/app.reducer";
+import { addMovieInList, removeMovieInList } from "../state/reducer/app.reducer";
 import { RootState } from "../state/store";
-import { Switch } from "react-native-gesture-handler";
 
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
 
 const MovieDetail: FC<Props> = () => {
   const dispatch = useDispatch();
-  const { params: { movieId } } = useRoute<Props['route']>();
-  const { data, isLoading, isSuccess, isFetching } = useFetchMovieQuery(movieId);
   const { colors } = useTheme();
   const queryClient = useQueryClient();
 
-  const isInList = useSelector((state: RootState) => state.app.isMovieInList);
+  // Fetch movie detail
+  const { params: { movieId } } = useRoute<Props['route']>();
+  const { data, isLoading, isSuccess, isFetching } = useFetchMovieQuery(movieId);
 
+  // ** ADD/REMOVE
+  // State of movie : is in user list or not
+  const isMovieInList = useSelector((state: RootState) => state.app.movies.includes(movieId));
+
+  // Add movie
   const addMovie = useMutation(
-    async (movie: { movieId: string }) => await userService.addMovie(movie),
-    {
-      onSuccess: () => {
-        dispatch(addMovieInList());
-        queryClient.invalidateQueries(["userList"]);
-      },
-    }
+    async (movie: { movieId: string }) => await userService.addMovie(movie)
   );
   
   const add = async(movie: { movieId: string }) => {
-    await addMovie.mutateAsync(movie);
+    await addMovie.mutateAsync(movie, {
+      onSuccess: () => {
+        dispatch(addMovieInList(movieId));
+        queryClient.invalidateQueries(["userList"]);
+      },
+    });
   }
 
+  // Remove movie
+  const removeMovie = useMutation(
+    async (movie: { movieId: string }) => await userService.removeMovie(movie)
+  );
+
+  const remove = async(movie: { movieId: string }) => {
+    await removeMovie.mutateAsync(movie, {
+      onSuccess: () => {
+        dispatch(removeMovieInList(movieId));
+        queryClient.invalidateQueries(["userList"]);
+      },
+    });
+  }
+  // ***
+
+  // Fetch data
   if (!data) return null;
   if (isLoading || isFetching) return <LoadingIndicator />;
 
@@ -62,9 +82,17 @@ const MovieDetail: FC<Props> = () => {
           imageStyle={{ opacity: 0.3 }}
         >
           <View style={{ height: dimensions.fullHeight, marginTop: 100 }}>
-            <ButtonTypography.Icon onPress={() => add({movieId: movie._id})}>
+
+            {!isMovieInList ? (
+              <ButtonTypography.Icon onPress={() => add({movieId: movie._id})}>
                 <PlusIcon color={color.light} />
-            </ButtonTypography.Icon>
+              </ButtonTypography.Icon>
+            ) : (
+              <ButtonTypography.Icon onPress={() => remove({movieId: movie._id})}>
+                <CheckIcon color={color.light} />
+              </ButtonTypography.Icon>
+            )}
+            
             <View style={{ alignItems: "center", margin: margin.md }}>
               <Image
                 style={{ width: 200, height: 350, borderRadius: radius.xlg }}

@@ -1,7 +1,7 @@
-import { useQueries, useQuery } from "react-query";
-import { useQueriesTyped } from "../hooks/useQueryTyped";
+import { useQuery } from "react-query";
+import { useDispatch } from "react-redux";
+import { setUserList } from "../state/reducer/app.reducer";
 import { IQueryAllMovies, IQueryMovie } from "../type/queries";
-import { TUserList } from "../type/userlist";
 import movieService from "./movieService";
 import userService from "./userService";
 
@@ -25,11 +25,13 @@ export const useFetchAllMoviesQuery = () => {
 }
 
 export const useFetchUserList = () => {
+  const dispatch = useDispatch();
   return useQuery(
     ["userList"],
     async () => await userService.fetchUserList(),
     {
       onSuccess(data) {
+        dispatch(setUserList(data.data.list.moviesIds));
         return data;
       },
     }

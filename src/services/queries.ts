@@ -35,15 +35,3 @@ export const useFetchUserList = () => {
     }
   );
 }
-
-export const useMovieDetailsForUserList = (userList: TUserList) => {
-  return useQueriesTyped(
-    userList?.list.movies.map((movie: {movie: string}) => {
-      return {
-        queryKey: ["movie", movie.movie],
-        queryFn: async () => await movieService.fetchMovieService(movie.movie),
-        enabled: !!userList,
-      };
-    }) ?? []
-  );
-}

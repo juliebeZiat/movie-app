@@ -1,64 +1,63 @@
-import { FC, useCallback, useEffect, useState } from "react";
-import { Text, View } from "react-native";
-import { FlatList } from "react-native-gesture-handler";
-import { useQueries } from "react-query";
+import { FC } from "react";
+import { FlatList, Text, View } from "react-native";
+import { useMutation, useQueryClient } from "react-query";
+import { useDispatch } from "react-redux";
 import { LoadingIndicator } from "../components/LoadingIndicator";
-import UserListMovieDetails from "../components/UserListMovieDetails";
-import { useQueriesTyped } from "../hooks/useQueryTyped";
-import movieService from "../services/movieService";
-import { useFetchMovieQuery, useFetchUserList, useMovieDetailsForUserList } from "../services/queries";
+import { useFetchUserList } from "../services/queries";
+import userService from "../services/userService";
+import { removeMovieInList } from "../state/reducer/app.reducer";
 import { padding } from "../styles";
+import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 import TextTypography from "../styles/generalStyles/text.typography";
-import { Endpoints } from "../type/endpoints";
-import { Movie } from "../type/movie";
-import { TUserList } from "../type/userlist";
-
 
 const UserList: FC = () => {
-  const { data: userList, isSuccess } = useFetchUserList();
-  const userListMovies = userList?.data.list.movies;
-  
-  const useMovieDetailsForUserList = (userList: TUserList) => {
-    return useQueriesTyped(
-      userListMovies?.map((movie: {movie: string}) => {
-        return {
-          queryKey: ["movie", movie.movie],
-          queryFn: async () => await movieService.fetchMovieService(movie.movie),
-          enabled: !!userList,
-        };
-      }) ?? []
-    );
-  }
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
+  const { data, isSuccess, isLoading, isFetching } = useFetchUserList();
 
-  const data = useMovieDetailsForUserList(userListMovies);
-  const success = data.some((d) => d.isFetching);
+  const removeMovie = useMutation(
+    async (movie: { movieId: string }) => await userService.removeMovie(movie),
+    {
+      onSuccess: () => {
+        dispatch(removeMovieInList());
+        queryClient.invalidateQueries(["userList"]);
+      },
+    }
+  );
 
-  if(success) {
-    return [];
+  const remove = async(movie: { movieId: string }) => {
+    await removeMovie.mutateAsync(movie);
   }
   
-  const movies = data.map((movie) => movie.data.data);
-  
+  if (!data) return null;
+  if (isLoading || isFetching) return <LoadingIndicator />;
+
+  const movies = data.data.detailedMovies;
+
   return (
     <View style={{ paddingTop: 100, paddingHorizontal: padding.md }}>
       <TextTypography.Title>My list</TextTypography.Title>
-
-      {isSuccess && userList ? (
+      {isSuccess && data ? (
         <FlatList
           data={movies}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
             <>
-            <TextTypography.Text>{item.title}</TextTypography.Text>
-            <Text>Coucou</Text>
+              <TextTypography.Text>{item.title}</TextTypography.Text>
+              <ButtonTypography.Small
+                onPress={() => remove({movieId: item._id})}
+                // onPress={() => console.log({movieId: item._id})}
+              >
+                Remove
+              </ButtonTypography.Small>
             </>
           )}
-          />
+        />
       ) : (
         <LoadingIndicator />
       )}
     </View>
-  )
+  );
 }
 
 export default UserList;

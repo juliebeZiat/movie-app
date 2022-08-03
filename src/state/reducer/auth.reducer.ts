@@ -5,19 +5,12 @@ import { RootState } from '../store';
 export interface authState {
   isLoggedIn: boolean,
   token: string | undefined,
-  theme: keyof typeof THEMES,
 }
 
-export enum THEMES {
-  LIGHT = 'light',
-  DARK = 'dark',
-  SYSTEM = 'system',
-}
 
 const initialState: authState = {
   isLoggedIn: false,
   token: undefined,
-  theme: 'SYSTEM',
 };
 
 const authSlice = createSlice({
@@ -33,15 +26,10 @@ const authSlice = createSlice({
       state.isLoggedIn = false;
       state.token = undefined;
       axios.defaults.headers.common = {};
-    },
-    setTheme: (state: RootState, { payload }: PayloadAction<authState["theme"]>) => {
-      state.theme = payload;
     }
   },
 });
 
-export const themeSelector = (state: RootState): authState["theme"] => state.auth.theme;
-
-export const { login, logout, setTheme } = authSlice.actions;
+export const { login, logout } = authSlice.actions;
 
 export default authSlice;

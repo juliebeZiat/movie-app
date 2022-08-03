@@ -44,4 +44,16 @@ export namespace Endpoints {
 
     export type Response = UserList
   }
+
+  export namespace AddMovie {
+    export type Request = { movieId: string }
+
+    export type Response = { newMovie: string }
+  }
+
+  export namespace RemoveMovie {
+    export type Request = { movieId: string }
+
+    export type Response = { removedMovie: string }
+  }
 }

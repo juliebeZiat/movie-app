@@ -34,10 +34,13 @@ const Home: FC = () => {
     }
   });
 
-  const loginQuery = useMutation(async (data: { email: string; password: string }) => await authService.loginPost({
-    email: data.email,
-    password: data.password,
-  }));
+  const loginQuery = useMutation(
+    async (data: { email: string; password: string }) =>
+      await authService.loginPost({
+        email: data.email,
+        password: data.password,
+      })
+  );
 
   const handleSignin = async (data: { email: string; password: string }) => {
     await loginQuery.mutateAsync(data, {

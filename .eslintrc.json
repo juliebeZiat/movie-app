@@ -5,7 +5,9 @@
     },
     "extends": [
         "plugin:react/recommended",
-        "airbnb"
+        "plugin:react-hooks/recommended",
+        "airbnb",
+        "react-app"
     ],
     "parserOptions": {
         "ecmaFeatures": {
@@ -15,10 +17,13 @@
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        "react",
+        "react-hooks"
     ],
     "rules": {
         "linebreak-style": 0,
-        "no-param-reassign": 0
+        "no-param-reassign": 0,
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn"
     }
 }

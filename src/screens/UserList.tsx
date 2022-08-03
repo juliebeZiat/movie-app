@@ -1,17 +1,15 @@
+import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
-import { FlatList, View } from "react-native";
-import { useMutation, useQueryClient } from "react-query";
-import { useDispatch } from "react-redux";
+import { FlatList, Image, Text, View } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { useFetchUserList } from "../services/queries";
-import userService from "../services/userService";
-import { removeMovieInList, setUserList } from "../state/reducer/app.reducer";
-import { padding } from "../styles";
-import { ButtonTypography } from "../styles/generalStyles/buttons.style";
+import { color, dimensions, font, margin, padding, radius } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
+import { Nav } from "../type/Nav";
 
 const UserList: FC = () => {
-  const dispatch = useDispatch();
+  const { navigate } = useNavigation<Nav>();
   const { data, isSuccess, isLoading, isFetching } = useFetchUserList();
   
   if (!data) return null;
@@ -28,9 +26,39 @@ const UserList: FC = () => {
           data={movies}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => (
-            <>
-              <TextTypography.Text>{item.title}</TextTypography.Text>
-            </>
+            <TouchableOpacity
+              onPress={() => navigate("Movie", { movieId: item._id })}
+            >
+              <View style={{ marginVertical: margin.sm }}>
+                <Image
+                  style={{
+                    width: 350,
+                    height: 80,
+                    borderRadius: radius.xlg,
+                    overflow: "hidden",
+                  }}
+                  source={{ uri: item.backdrop_path }} 
+                />
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 8,
+                    left: 8,
+                    right: 8,
+                  }}
+                >
+                  <TextTypography.Text
+                    style={{
+                      textShadowColor: color.dark,
+                      textShadowOffset: {width: -1, height: 1},
+                      textShadowRadius: 7
+                    }}
+                  >
+                    {item.title}
+                  </TextTypography.Text>
+                </View>
+              </View>
+            </TouchableOpacity>
           )}
         />
       ) : (

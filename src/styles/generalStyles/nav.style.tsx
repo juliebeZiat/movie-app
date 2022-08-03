@@ -45,7 +45,7 @@ export const NavStyleLogin: FC = () => {
 };
 
 export const NavMovieDetail: FC = () => {
-  const { navigate } = useNavigation<Nav>();
+  const { goBack } = useNavigation<Nav>();
   const { colors } = useTheme();
 
   return (
@@ -53,7 +53,7 @@ export const NavMovieDetail: FC = () => {
       marginTop: 55,
       marginLeft: margin.tiny,
     }}>
-      <TouchableOpacity onPress={() => navigate("Home")}>
+      <TouchableOpacity onPress={() => goBack()}>
         <ChevronLeftIcon color={colors.text} size={25} />
       </TouchableOpacity>
     </View>

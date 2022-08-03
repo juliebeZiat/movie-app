@@ -52,7 +52,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
         style={{ marginBottom: 100 }}
         renderItem={({ item }) => (
           <TouchableOpacity
-          onPress={() => navigate("Movie", { movieId: item._id })}
+            onPress={() => navigate("Movie", { movieId: item._id })}
           >
             <View style={{ marginBottom: margin.lg }}>
               <Image

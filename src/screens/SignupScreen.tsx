@@ -1,6 +1,10 @@
-import { useNavigation } from "@react-navigation/native";
 import React, { FC } from "react";
-import { View, Text, KeyboardAvoidingView } from "react-native";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "@react-navigation/native";
+import { useMutationSignUp } from "../services/mutations";
+
+import { View, Text, KeyboardAvoidingView, ActivityIndicator } from "react-native";
+import { color, font, margin, padding } from "../styles";
 
 import Input from "../components/Input";
 import { ButtonTypography } from "../styles/generalStyles/buttons.style";
@@ -9,22 +13,18 @@ import TextTypography from "../styles/generalStyles/text.typography";
 import { Nav } from "../type/Nav";
 
 import { Controller, useForm } from "react-hook-form";
-import { margin, padding } from "../styles";
-import { useMutation } from "react-query";
-import authService from "../services/authService";
-import { useDispatch } from "react-redux";
 import { login } from "../state/reducer/auth.reducer";
+
+type FormValues = {
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const Signin: FC = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
-
-  type FormValues = {
-    username: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  };
 
   const { control, handleSubmit, clearErrors, watch } = useForm<FormValues>({
     defaultValues: {
@@ -35,14 +35,10 @@ const Signin: FC = () => {
     }
   });
 
-  const signUpQuery = useMutation(async (data: { username: string; email: string; password: string }) => await authService.signUp({
-    name: data.username,
-    email: data.email,
-    password: data.password,
-  }));
+  const { mutateAsync, isError, isLoading } = useMutationSignUp();
 
   const handleSignup = async (data: { username: string, email: string; password: string }) => {
-    await signUpQuery.mutateAsync(data, {
+    await mutateAsync(data, {
       onSuccess: (data) => {
         dispatch(login(data.access_token));
         clearErrors();
@@ -157,8 +153,14 @@ const Signin: FC = () => {
               <Text>Create a new account</Text>
             </ButtonTypography.Large>
           </View>
+          {isLoading && <ActivityIndicator />}
+          {isError && (
+            <TextTypography.Text style={{ textAlign: 'center', fontSize: font.md, color: color.primary, marginBottom: margin.md }}>
+              This user already exists. Please login.
+            </TextTypography.Text>
+          )}
         </View>
-        <ButtonTypography onPress={() => navigate("Signin")}>
+        <ButtonTypography onPress={() => navigate("Login")}>
           <Text>Already have an account ? Login here</Text>
         </ButtonTypography>
 

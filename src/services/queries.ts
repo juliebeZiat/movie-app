@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
-import { setUserList } from "../state/reducer/app.reducer";
+import { setUserList } from "../state/reducer/movie.reducer";
 import { IQueryAllMovies, IQueryMovie } from "../type/queries";
 import movieService from "./movieService";
 import userService from "./userService";

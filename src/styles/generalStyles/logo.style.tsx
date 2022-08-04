@@ -1,4 +1,3 @@
-import { useTheme } from '@react-navigation/native';
 import React, { FC } from 'react';
 import { View } from 'react-native';
 import { color, padding } from '..';

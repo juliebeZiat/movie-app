@@ -16,53 +16,49 @@ interface IItem {
 export const FirstItemMoviesScreen: FC<IItem> = ({ allMoviesList }: IItem) => {
   const { navigate } = useNavigation<Nav>();
   return (
-
-    <TouchableOpacity onPress={() => navigate("Movie", { movieId: allMoviesList[0]._id })}>
-          <Image
-            style={{
-              height: 220,
-              borderRadius: radius.xlg,
-              overflow: "hidden",
-            }}
-            source={{ uri: allMoviesList[0].poster_path }}
-          />
-          <View
-            style={{ position: "absolute", bottom: 20, left: 15, right: 15 }}
-          >
-            <TextTypography.Subtitle
-              style={{ color: color.light, marginBottom: margin.tiny }}
-            >
-              {allMoviesList[0].title}
-            </TextTypography.Subtitle>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                flexWrap: "wrap",
-                marginBottom: margin.sm,
-              }}
-            >
-              {allMoviesList[0].genres.map((genre) => {
-                return (
-                  <TextTypography.Caption
-                    style={{ color: color.light, fontSize: font.sm }}
-                    key={genre.id}
-                  >
-                    {genre.name.toUpperCase() + " "}
-                  </TextTypography.Caption>
-                );
-              })}
-            </View>
-            <ButtonTypography.Small
-              onPress={() =>
-                navigate("Movie", { movieId: allMoviesList[0]._id })
-              }
-              style={{ backgroundColor: "#E50909" }}
-            >
-              <Text>Details</Text>
-            </ButtonTypography.Small>
-          </View>
-        </TouchableOpacity>
-
-  )
-}
+    <TouchableOpacity
+      onPress={() => navigate("Movie", { movieId: allMoviesList[0]._id })}
+    >
+      <Image
+        style={{
+          height: 220,
+          borderRadius: radius.xlg,
+          overflow: "hidden",
+        }}
+        source={{ uri: allMoviesList[0].poster_path }}
+      />
+      <View style={{ position: "absolute", bottom: 20, left: 15, right: 15 }}>
+        <TextTypography.Subtitle
+          style={{ color: color.light, marginBottom: margin.tiny }}
+        >
+          {allMoviesList[0].title}
+        </TextTypography.Subtitle>
+        <View
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            flexWrap: "wrap",
+            marginBottom: margin.sm,
+          }}
+        >
+          {allMoviesList[0].genres.map((genre) => {
+            return (
+              <TextTypography.Caption
+                style={{ color: color.light, fontSize: font.sm }}
+                key={genre.id}
+              >
+                {genre.name.toUpperCase() + " "}
+              </TextTypography.Caption>
+            );
+          })}
+        </View>
+        <ButtonTypography.Small
+          onPress={() => navigate("Movie", { movieId: allMoviesList[0]._id })}
+          style={{ backgroundColor: "#E50909" }}
+        >
+          <Text>Details</Text>
+        </ButtonTypography.Small>
+      </View>
+    </TouchableOpacity>
+  );
+};

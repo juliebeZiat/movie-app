@@ -17,9 +17,9 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: (state, action) => {
+    login: (state, { payload }) => {
       state.isLoggedIn = true;
-      state.token = action.payload;
+      state.token = payload;
       axios.defaults.headers.common = {'Authorization': `Bearer ${state.token}`};
     },
     logout: (state) => {
@@ -29,6 +29,8 @@ const authSlice = createSlice({
     }
   },
 });
+
+export const logSelector = (state: RootState) => state.auth.isLoggedIn;
 
 export const { login, logout } = authSlice.actions;
 

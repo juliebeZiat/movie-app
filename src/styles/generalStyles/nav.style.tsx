@@ -1,8 +1,7 @@
 import React, { FC } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
-import { Pressable, View } from "react-native";
+import { View } from "react-native";
 import { LargeLogo, Logo } from "./logo.style";
-import * as Icons from "react-native-heroicons/solid";
 import { margin, padding } from "..";
 import { Nav } from "../../type/Nav";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";

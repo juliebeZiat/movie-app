@@ -16,13 +16,13 @@ import { useAppTheme } from "../hooks/useAppTheme";
 import { StatusBar } from "expo-status-bar";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import UserList from "../screens/UserList";
-import { CogIcon, HeartIcon, HomeIcon } from "react-native-heroicons/outline";
+import { CogIcon, HeartIcon, HomeIcon, LoginIcon, UserIcon } from "react-native-heroicons/outline";
 
 export type RootStackParamList = {
   Home: undefined;
   Movie: { movieId: string };
-  Signin: undefined;
-  Signup: undefined;
+  Login: undefined;
+  Register: undefined;
   Settings: undefined;
   Root: undefined;
 };
@@ -97,16 +97,22 @@ const Navigation: FC = () => {
           ) : (
             <>
               <Drawer.Screen
-                name="Signin"
+                name="Login"
                 component={Signin}
                 options={{
+                  drawerIcon: ({focused}) => (
+                    <LoginIcon color={focused ? color.purple : "lightgrey" }/>
+                  ),
                   header: () => <NavStyleLogout />,
                 }}
               />
               <Drawer.Screen
-                name="Signup"
+                name="Register"
                 component={Signup}
                 options={{
+                  drawerIcon: ({focused}) => (
+                    <UserIcon color={focused ? color.purple : "lightgrey" }/>
+                  ),
                   header: () => <NavStyleLogout />,
                 }}
               />

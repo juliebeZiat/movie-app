@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { Endpoints } from '../type/endpoints';
 
-const loginPost = async({email, password}: Endpoints.Login.Request) => {
+const signIn = async({email, password}: Endpoints.Login.Request) => {
   const response = await axios.post<Endpoints.Login.Response>('auth/signin', {email, password});
   return response.data;
 };
@@ -12,7 +12,7 @@ const signUp = async({name, email, password}: Endpoints.SignUp.Request) => {
 };
 
 const authService = {
-  loginPost,
+  signIn,
   signUp,
 }
 

@@ -1,31 +1,28 @@
 import React, { FC } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
-
-import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
-
-import Input from "../components/Input";
+import { useMutationSignIn } from "../services/mutations";
 
 import { Nav } from "../type/Nav";
 
-import authService from "../services/authService";
-import { ButtonTypography } from "../styles/generalStyles/buttons.style";
-
+import Input from "../components/Input";
 import { Controller, useForm } from "react-hook-form";
 
 import { font, margin, padding, color } from "../styles";
+import { View, Text, ActivityIndicator, KeyboardAvoidingView } from "react-native";
+import { ButtonTypography } from "../styles/generalStyles/buttons.style";
 import TextTypography from "../styles/generalStyles/text.typography";
-import { useMutation } from "react-query";
-import { useDispatch } from "react-redux";
+
 import { login } from "../state/reducer/auth.reducer";
+
+type FormValues = {
+  email: string;
+  password: string;
+};
 
 const Home: FC = () => {
   const { navigate } = useNavigation<Nav>();
   const dispatch = useDispatch();
-
-  type FormValues = {
-    email: string;
-    password: string;
-  };
 
   const { control, handleSubmit, clearErrors } = useForm<FormValues>({
     defaultValues: {
@@ -34,16 +31,10 @@ const Home: FC = () => {
     }
   });
 
-  const loginQuery = useMutation(
-    async (data: { email: string; password: string }) =>
-      await authService.loginPost({
-        email: data.email,
-        password: data.password,
-      })
-  );
+  const { mutateAsync, isError, isLoading } = useMutationSignIn();
 
   const handleSignin = async (data: { email: string; password: string }) => {
-    await loginQuery.mutateAsync(data, {
+    await mutateAsync(data, {
       onSuccess: (data) => {
         dispatch(login(data.access_token));
         clearErrors();
@@ -117,13 +108,13 @@ const Home: FC = () => {
               <Text>Authenticate</Text>
             </ButtonTypography.Large>
           </View>
-          {loginQuery.isLoading && <ActivityIndicator />}
-          {loginQuery.isError && (
+          {isLoading && <ActivityIndicator />}
+          {isError && (
             <TextTypography.Text style={{ textAlign: 'center', fontSize: font.md, color: color.primary, marginBottom: margin.md }}>
               Wrong email or password
             </TextTypography.Text>
           )}
-          <ButtonTypography onPress={() => navigate("Signup")}>
+          <ButtonTypography onPress={() => navigate("Register")}>
             <Text>Don't have an account yet ? Register here.</Text>
           </ButtonTypography>
         </View>

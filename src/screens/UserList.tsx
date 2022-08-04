@@ -4,7 +4,7 @@ import { FlatList, Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { LoadingIndicator } from "../components/LoadingIndicator";
 import { useFetchUserList } from "../services/queries";
-import { color, dimensions, font, margin, padding, radius } from "../styles";
+import { color, margin, padding, radius } from "../styles";
 import TextTypography from "../styles/generalStyles/text.typography";
 import { Nav } from "../type/Nav";
 

@@ -2,18 +2,18 @@ import { useNavigation } from "@react-navigation/native";
 import React, { FC } from "react";
 import { Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { color, font, margin, radius } from "../../styles";
-import { ButtonTypography } from "../../styles/generalStyles/buttons.style";
-import TextTypography from "../../styles/generalStyles/text.typography";
+import { color, font, margin, radius } from "../../../styles";
+import { ButtonTypography } from "../../../styles/generalStyles/buttons.style";
+import TextTypography from "../../../styles/generalStyles/text.typography";
 
-import { Movie } from "../../type/movie";
-import { Nav } from "../../type/Nav";
+import { Movie } from "../../../type/movie";
+import { Nav } from "../../../type/Nav";
 
 interface IItem {
   allMoviesList: Movie[]
 }
 
-export const FirstItemMoviesScreen: FC<IItem> = ({ allMoviesList }: IItem) => {
+export const FirstItem: FC<IItem> = ({ allMoviesList }: IItem) => {
   const { navigate } = useNavigation<Nav>();
   return (
     <TouchableOpacity

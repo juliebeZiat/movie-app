@@ -18,6 +18,10 @@ const Title = ({style, ...props}: TextTypography) => (
   <Text {...props} style={[{ fontSize: font.xxlg, fontWeight: 'bold' }, style]} />
 );
 
+const PageTitle = ({style, ...props}: TextTypography) => (
+  <Text {...props} style={[{ fontSize: font.xlg, fontWeight: 'bold', marginVertical: margin.md, textAlign: 'center' }, style]} />
+);
+
 const Subtitle = ({style, ...props}: TextTypography) => (
   <Text {...props} style={[{ fontSize: font.xlg, fontWeight: 'bold' }, style]} />
 );
@@ -45,6 +49,7 @@ const Disabled = ({style, ...props}: TextTypography) => {
 const TextTypography = {
   Text,
   Title,
+  PageTitle,
   Subtitle,
   Caption,
   LargeText,

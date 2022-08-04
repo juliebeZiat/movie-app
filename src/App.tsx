@@ -8,22 +8,26 @@ import { store } from './state/store';
 import InitProvider from './contexts/InitProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 
 let persistor = persistStore(store);
 const queryClient = new QueryClient;
 
 const App: FC = () =>  {
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <ReduxProvider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <InitProvider>
-            <Navigation />
-          </InitProvider>
-        </PersistGate>
-      </ReduxProvider>
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <SafeAreaProvider>
+      <QueryClientProvider client={queryClient}>
+        <ReduxProvider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <InitProvider>
+              <Navigation />
+            </InitProvider>
+          </PersistGate>
+        </ReduxProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </SafeAreaProvider>
   );
 }
 

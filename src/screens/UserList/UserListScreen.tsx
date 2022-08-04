@@ -2,11 +2,11 @@ import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
 import { FlatList, Image, Text, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import { useFetchUserList } from "../services/queries";
-import { color, margin, padding, radius } from "../styles";
-import TextTypography from "../styles/generalStyles/text.typography";
-import { Nav } from "../type/Nav";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { useFetchUserList } from "../../services/queries";
+import { color, margin, padding, radius } from "../../styles";
+import TextTypography from "../../styles/generalStyles/text.typography";
+import { Nav } from "../../type/Nav";
 
 const UserList: FC = () => {
   const { navigate } = useNavigation<Nav>();
@@ -51,7 +51,8 @@ const UserList: FC = () => {
                     style={{
                       textShadowColor: color.dark,
                       textShadowOffset: {width: -1, height: 1},
-                      textShadowRadius: 7
+                      textShadowRadius: 7,
+                      color: color.light
                     }}
                   >
                     {item.title}

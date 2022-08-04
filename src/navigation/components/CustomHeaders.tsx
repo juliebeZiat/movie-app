@@ -1,8 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { View } from "react-native";
-import { LargeLogo, Logo } from "./logo.style";
-import { margin, padding } from "..";
+import { LargeLogo } from "../../styles/generalStyles/logo.style";
+import { margin, padding } from "../../styles";
 import { Nav } from "../../type/Nav";
 import { ChevronLeftIcon } from "react-native-heroicons/outline";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -25,38 +25,15 @@ export const NavStyleLogout: FC = () => {
   );
 };
 
-export const NavStyleLogin: FC = () => {
-  const { colors } = useTheme();
-  return (
-    <View
-      style={{
-        height: 100,
-        paddingTop: padding.xlg,
-        paddingLeft: padding.md,
-        backgroundColor: colors.background,
-        flexDirection: "row",
-        justifyContent: 'space-between'
-      }}
-    >
-      <Logo />
-    </View>
-  );
-};
-
 export const NavMovieDetail: FC = () => {
-  const { goBack } = useNavigation<Nav>();
   const { colors } = useTheme();
+  const { goBack } = useNavigation<Nav>();
 
   return (
-    <View style={{
-      marginTop: 55,
-      marginLeft: margin.tiny,
-    }}>
+    <>
       <TouchableOpacity onPress={() => goBack()}>
         <ChevronLeftIcon color={colors.text} size={25} />
       </TouchableOpacity>
-    </View>
+    </>
   )
 }
-
-

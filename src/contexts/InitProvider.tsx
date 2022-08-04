@@ -1,14 +1,16 @@
 import { API_URL } from "@env";
 import axios from "axios";
 import React, { FC, PropsWithChildren, useEffect, useState } from "react";
+import { SafeAreaView } from "react-native-safe-area-context";
+
 
 import { useSelector } from "react-redux";
+import { useAppTheme } from "../hooks/useAppTheme";
 import { RootState } from "../state/store";
 
 const InitProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
-
+  const { isDarkTheme, scheme, isSystemThemeEnabled } = useAppTheme();
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
-
   const token = useSelector((state: RootState) => state.auth.token);
 
   useEffect(() => {
@@ -25,9 +27,9 @@ const InitProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   }
 
   return (
-    <>
+    <SafeAreaView style={{ flex: 1, backgroundColor: isDarkTheme || (isSystemThemeEnabled && scheme === "dark") ? "black" : "white" }}>
       {children}
-    </>
+    </SafeAreaView>
   )
 }
 

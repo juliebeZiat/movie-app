@@ -3,11 +3,12 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import React, { FC, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import { getGenreArray } from "../../functions/getGenreArray";
-import { color, font, margin, radius } from "../../styles";
-import TextTypography from "../../styles/generalStyles/text.typography";
-import { Movie } from "../../type/movie";
-import { Nav } from "../../type/Nav";
+import { getGenreArray } from "../../../functions/getGenreArray";
+import { color, dimensions, font, margin, radius } from "../../../styles";
+import TextTypography from "../../../styles/generalStyles/text.typography";
+import { Movie } from "../../../type/movie";
+import { Nav } from "../../../type/Nav";
+
 
 interface IListItems {
   allMoviesList: Movie[]
@@ -28,15 +29,15 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
 
   return (
     <>
-      <TextTypography.Subtitle style={{ marginTop: margin.sm }}>
+      <TextTypography.PageTitle>
         Movies
-      </TextTypography.Subtitle>
+      </TextTypography.PageTitle>
 
       <Picker
         selectedValue={selectedValue}
         onValueChange={(itemValue) => setselectedValue(itemValue)}
-        style={{ height: 88 }}
-        itemStyle={{ height: 88, color: colors.text }}
+        style={{ height: 100 }}
+        itemStyle={{ height: 100, color: colors.text }}
       >
         <Picker.Item label="All movies" value="all"/>
         {getGenreArray(movies).map((genre) => {
@@ -48,8 +49,8 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
         data={(selectedValue === "all" ? allMoviesList : filteredData)}
         keyExtractor={(item) => item._id}
         numColumns={2}
-        columnWrapperStyle={{ flex: 1, justifyContent: "space-between" }}
-        style={{ marginBottom: 100 }}
+        columnWrapperStyle={{ justifyContent: "space-between" }}
+        style={{ height: dimensions.fullHeight - 250 }}
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => navigate("Movie", { movieId: item._id })}
@@ -78,6 +79,9 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
                     fontWeight: "bold",
                     color: color.light,
                     marginBottom: margin.xtiny,
+                    textShadowColor: color.dark,
+                    textShadowOffset: {width: -1, height: 1},
+                    textShadowRadius: 7
                   }}
                 >
                   {item.title.split(" ").slice(0, 2).join(" ")}

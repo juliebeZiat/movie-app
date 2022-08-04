@@ -1,14 +1,15 @@
 import React, { FC } from "react";
 import { View } from "react-native";
-import { dimensions, margin } from "../styles";
+import { dimensions, margin } from "../../styles";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-import { FirstItemMoviesScreen } from "../components/MoviesScreen/FirstItem";
-import { ListItems } from "../components/MoviesScreen/ListItems";
-import { LoadingIndicator } from "../components/LoadingIndicator";
-import { useFetchAllMoviesQuery } from "../services/queries";
+// import { FirstItemMoviesScreen } from "./components/FirstItem";
+import { ListItems } from "./components/ListItems";
 
-const Welcome: FC = () => {
+import { LoadingIndicator } from "../../components/LoadingIndicator";
+import { useFetchAllMoviesQuery } from "../../services/queries";
+
+const Movies: FC = () => {
   const { data, isLoading, isSuccess, isFetching } = useFetchAllMoviesQuery();
 
   if (!data) return null;
@@ -17,12 +18,12 @@ const Welcome: FC = () => {
   const allMoviesList = data.data;
 
   return (
-    <View style={{ flex: 1, alignItems: "center", marginTop: margin.xxlg }}>
+    <View style={{ alignItems: "center" }}>
       {isSuccess && data ? (
-        <SafeAreaView style={{ width: dimensions.fullWidth - 50 }}>
+        <View style={{ width: dimensions.fullWidth - 50 }}>
           {/* <FirstItemMoviesScreen allMoviesList={allMoviesList} /> */}
           <ListItems allMoviesList={allMoviesList} />
-        </SafeAreaView>
+        </View>
       ) : (
         <LoadingIndicator />
       )}
@@ -30,4 +31,4 @@ const Welcome: FC = () => {
   );
 };
 
-export default Welcome;
+export default Movies;

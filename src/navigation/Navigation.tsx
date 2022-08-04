@@ -4,19 +4,27 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useSelector } from "react-redux";
 import { RootState } from "../state/store";
 
-import Signin from "../screens/SigninScreen";
-import Home from "../screens/MoviesScreen";
-import Signup from "../screens/SignupScreen";
-import MovieDetail from "../screens/MovieDetailScreen";
-import Settings from "../screens/SettingsScreen";
+import Signin from "../screens/Signin/SigninScreen";
+import Signup from "../screens/Signup/SignupScreen";
+import MovieDetail from "../screens/MovieDetails/MovieDetailScreen";
+import UserList from "../screens/UserList/UserListScreen";
+import Settings from "../screens/Settings/SettingsScreen";
+import Movies from "../screens/Movies/MoviesScreen";
 
-import { NavMovieDetail, NavStyleLogout } from "../styles/generalStyles/nav.style";
+import { NavMovieDetail, NavStyleLogout } from "./components/CustomHeaders";
 import { color } from "../styles";
 import { useAppTheme } from "../hooks/useAppTheme";
 import { StatusBar } from "expo-status-bar";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import UserList from "../screens/UserList";
-import { CogIcon, HeartIcon, HomeIcon, LoginIcon, UserIcon } from "react-native-heroicons/outline";
+
+import {
+  CogIcon,
+  HeartIcon,
+  HomeIcon,
+  LoginIcon,
+  UserIcon,
+} from "react-native-heroicons/outline";
+import CustomDrawerContent from "./components/CustomDrawerContent";
 
 export type RootStackParamList = {
   Home: undefined;
@@ -25,6 +33,7 @@ export type RootStackParamList = {
   Register: undefined;
   Settings: undefined;
   Root: undefined;
+  "My List": undefined;
 };
 
 const Drawer = createDrawerNavigator();
@@ -44,23 +53,37 @@ const Navigation: FC = () => {
         }
       />
       <NavigationContainer theme={theme}>
-        <Drawer.Navigator>
-        <Drawer.Screen 
-            navigationKey={isLogged ? "user" : "guest"}
-            name="Home"
-            component={Home}
-            options={{
-              headerTransparent: true,
-              headerTitle: "",
-              drawerIcon: ({focused}) => (
-                <HomeIcon color={focused ? color.purple : "lightgrey" }/>
-              ),
-              headerTintColor:
-                isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
-                  ? color.light
-                  : color.dark,
-            }}
-          />
+        <Drawer.Navigator
+          drawerContent={(props) => <CustomDrawerContent {...props} />}
+        >
+          <>
+            <Drawer.Screen
+              navigationKey={isLogged ? "user" : "guest"}
+              name="Home"
+              component={Movies}
+              options={{
+                headerTransparent: true,
+                headerTitle: "",
+                drawerIcon: ({ focused }) => (
+                  <HomeIcon color={focused ? color.purple : "lightgrey"} />
+                ),
+                headerTintColor:
+                  isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
+                    ? color.light
+                    : color.dark,
+              }}
+            />
+            <Drawer.Screen
+              navigationKey={isLogged ? "user" : "guest"}
+              name="Movie"
+              component={MovieDetail}
+              options={{
+                drawerItemStyle: { height: 0 },
+                headerTransparent: true,
+                header: () => <NavMovieDetail />,
+              }}
+            />
+          </>
           {isLogged ? (
             <>
               <Drawer.Screen
@@ -69,8 +92,8 @@ const Navigation: FC = () => {
                 options={{
                   headerTransparent: true,
                   headerTitle: "",
-                  drawerIcon: ({focused}) => (
-                    <HeartIcon color={focused ? color.purple : "lightgrey" }/>
+                  drawerIcon: ({ focused }) => (
+                    <HeartIcon color={focused ? color.purple : "lightgrey"} />
                   ),
                   headerTintColor:
                     isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
@@ -84,8 +107,8 @@ const Navigation: FC = () => {
                 options={{
                   headerTransparent: true,
                   headerTitle: "",
-                  drawerIcon: ({focused}) => (
-                    <CogIcon color={focused ? color.purple : "lightgrey" }/>
+                  drawerIcon: ({ focused }) => (
+                    <CogIcon color={focused ? color.purple : "lightgrey"} />
                   ),
                   headerTintColor:
                     isDarkTheme || (isSystemThemeEnabled && scheme === "dark")
@@ -100,8 +123,8 @@ const Navigation: FC = () => {
                 name="Login"
                 component={Signin}
                 options={{
-                  drawerIcon: ({focused}) => (
-                    <LoginIcon color={focused ? color.purple : "lightgrey" }/>
+                  drawerIcon: ({ focused }) => (
+                    <LoginIcon color={focused ? color.purple : "lightgrey"} />
                   ),
                   header: () => <NavStyleLogout />,
                 }}
@@ -110,25 +133,14 @@ const Navigation: FC = () => {
                 name="Register"
                 component={Signup}
                 options={{
-                  drawerIcon: ({focused}) => (
-                    <UserIcon color={focused ? color.purple : "lightgrey" }/>
+                  drawerIcon: ({ focused }) => (
+                    <UserIcon color={focused ? color.purple : "lightgrey"} />
                   ),
                   header: () => <NavStyleLogout />,
                 }}
               />
             </>
           )}
-          <Drawer.Screen
-            navigationKey={isLogged ? "user" : "guest"}
-            name="Movie"
-            component={MovieDetail}
-            options={{
-              drawerItemStyle: { height: 0 },
-              headerTransparent: true,
-              header: () => <NavMovieDetail />
-            }}
-          />
-          
         </Drawer.Navigator>
       </NavigationContainer>
     </>

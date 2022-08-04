@@ -1,9 +1,9 @@
 import React, { FC } from "react";
 import { View } from "react-native";
-import { useAppTheme } from "../hooks/useAppTheme";
-import { color, margin, padding } from "../styles";
+import { useAppTheme } from "../../../hooks/useAppTheme";
+import { color, margin, padding } from "../../../styles";
 import * as Icons from "react-native-heroicons/outline";
-import TextTypography from "../styles/generalStyles/text.typography";
+import TextTypography from "../../../styles/generalStyles/text.typography";
 import { Switch } from "react-native-gesture-handler";
 
 export const SwitchSystemTheme: FC = () => {

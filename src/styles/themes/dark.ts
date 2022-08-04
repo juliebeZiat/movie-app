@@ -6,7 +6,7 @@ export const darkTheme = {
   colors: {
     ...DarkTheme.colors,
     primary: color.purple,
-    background: color.dark,
+    background: "black",
     text: color.light,
     border: '#1B1B1B',
     notification: '#777777',

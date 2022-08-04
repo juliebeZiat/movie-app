@@ -1,13 +1,13 @@
 import React, { FC } from "react";
 import { Pressable, View } from "react-native";
 import * as Icons from "react-native-heroicons/outline";
-import { color, margin, padding } from "../styles";
-import TextTypography from "../styles/generalStyles/text.typography";
+import { color, margin, padding } from "../../styles";
+import TextTypography from "../../styles/generalStyles/text.typography";
 import { useDispatch } from "react-redux";
 
-import { logout } from "../state/reducer/auth.reducer";
-import { useAppTheme } from "../hooks/useAppTheme";
-import { SwitchDarkTheme, SwitchSystemTheme } from "../components/SwitchTheme";
+import { logout } from "../../state/reducer/auth.reducer";
+import { useAppTheme } from "../../hooks/useAppTheme";
+import { SwitchDarkTheme, SwitchSystemTheme } from "./components/SwitchTheme";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();

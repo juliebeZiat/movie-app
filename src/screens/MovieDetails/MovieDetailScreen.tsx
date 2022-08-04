@@ -1,24 +1,23 @@
-import React, { FC } from "react";
+import React, { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useRoute, useTheme } from "@react-navigation/native";
-import { useFetchMovieQuery } from "../services/queries";
-import { useMutationAddMovie, useMutationRemoveMovie } from "../services/mutations";
+import { useNavigation, useRoute, useTheme } from "@react-navigation/native";
+import { useFetchMovieQuery } from "../../services/queries";
+import { useMutationAddMovie, useMutationRemoveMovie } from "../../services/mutations";
 
 import { Image, ImageBackground, ScrollView, View } from "react-native";
-import { dimensions, margin, radius } from "../styles";
-import TextTypography from "../styles/generalStyles/text.typography";
+import { dimensions, margin, radius } from "../../styles";
+import TextTypography from "../../styles/generalStyles/text.typography";
 
-import { AddItem, RemoveItem } from "../components/MoviesScreen/AddRemoveItem";
+import { AddItem, RemoveItem } from "./components/AddRemoveItem";
 
-import { countStars } from "../functions/convertNoteToStars";
-import { LoadingIndicator } from "../components/LoadingIndicator";
+import { countStars } from "../../functions/convertNoteToStars";
+import { LoadingIndicator } from "../../components/LoadingIndicator";
 
-import { logSelector } from "../state/reducer/auth.reducer";
+import { logSelector } from "../../state/reducer/auth.reducer";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { RootStackParamList } from "../navigation/Navigation";
-import { RootState } from "../state/store";
-
+import { RootStackParamList } from "../../navigation/Navigation";
+import { RootState } from "../../state/store";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Movie">;
 
@@ -34,13 +33,12 @@ const MovieDetail: FC<Props> = () => {
   const { mutateAsync: mutateAdd } = useMutationAddMovie(movieId);
   const { mutateAsync: mutateRemove } = useMutationRemoveMovie(movieId);
   
-  //! TYPAGE
-  const add = async(movieId: string) => {
-    await mutateAdd(movieId);
+  const add = async() => {
+    await mutateAdd();
   }
 
-  const remove = async(movieId: void) => {
-    await mutateRemove(movieId);
+  const remove = async() => {
+    await mutateRemove();
   }
 
   if (!data) return null;
@@ -57,12 +55,12 @@ const MovieDetail: FC<Props> = () => {
           blurRadius={10}
           imageStyle={{ opacity: 0.3 }}
         >
-          <View style={{ height: dimensions.fullHeight, marginTop: 100 }}>
+          <View>
             <View style={{ alignItems: "flex-end", marginRight: margin.md }}>
               {isLogged && (!isMovieInList ? (
-                <AddItem onPress={() => add(movie._id)} />
+                <AddItem onPress={() => add()} />
               ) : (
-                <RemoveItem onPress={() => remove(movie._id)} />
+                <RemoveItem onPress={() => remove()} />
               ))}
             </View>
             

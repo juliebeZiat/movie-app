@@ -1,8 +1,8 @@
 import React, { FC } from "react";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { CheckCircleIcon, PlusCircleIcon } from "react-native-heroicons/solid";
-import { useAppTheme } from "../../hooks/useAppTheme";
-import { color } from "../../styles";
+import { useAppTheme } from "../../../hooks/useAppTheme";
+import { color } from "../../../styles";
 
 type TouchableProp = {
   onPress(): void

@@ -30,15 +30,15 @@ const MovieDetail: FC<Props> = () => {
   const isLogged = useSelector(logSelector);
   const isMovieInList = useSelector((state: RootState) => state.movie.movies.includes(Number(movieId)));
 
-  const { mutateAsync: mutateAdd } = useMutationAddMovie(movieId);
-  const { mutateAsync: mutateRemove } = useMutationRemoveMovie(movieId);
+  const { mutateAsync: mutateAdd } = useMutationAddMovie();
+  const { mutateAsync: mutateRemove } = useMutationRemoveMovie();
   
   const add = async() => {
-    await mutateAdd();
+    await mutateAdd(movieId);
   }
 
   const remove = async() => {
-    await mutateRemove();
+    await mutateRemove(movieId);
   }
 
   if (!data) return null;
@@ -55,7 +55,7 @@ const MovieDetail: FC<Props> = () => {
           blurRadius={10}
           imageStyle={{ opacity: 0.3 }}
         >
-          <View>
+          <View style={{ paddingTop: 60, height: dimensions.fullHeight }}>
             <View style={{ alignItems: "flex-end", marginRight: margin.md }}>
               {isLogged && (!isMovieInList ? (
                 <AddItem onPress={() => add()} />
@@ -76,7 +76,6 @@ const MovieDetail: FC<Props> = () => {
               style={{
                 marginHorizontal: margin.sm,
                 marginVertical: margin.xlg,
-
               }}
             >
               <TextTypography.Subtitle>{movie.title}</TextTypography.Subtitle>

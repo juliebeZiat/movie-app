@@ -9,7 +9,6 @@ import TextTypography from "../../../styles/generalStyles/text.typography";
 import { Movie } from "../../../type/movie";
 import { Nav } from "../../../type/Nav";
 
-
 interface IListItems {
   allMoviesList: Movie[]
 }
@@ -37,7 +36,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
       <Picker
         selectedValue={selectedValue}
         onValueChange={(itemValue) => setselectedValue(itemValue)}
-        style={{ height: 100 }}
+        style={{ height: 100, color: colors.text }}
         itemStyle={{ height: 100, color: colors.text }}
       >
         <Picker.Item label="All movies" value="all"/>

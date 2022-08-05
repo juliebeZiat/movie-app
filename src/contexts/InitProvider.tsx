@@ -28,9 +28,10 @@ const InitProvider: FC<PropsWithChildren<{}>> = ({ children }) => {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: isDarkTheme || (isSystemThemeEnabled && scheme === "dark") ? "black" : "white" }}>
+    // <SafeAreaView style={{ flex: 1, backgroundColor: isDarkTheme || (isSystemThemeEnabled && scheme === "dark") ? "black" : "white" }}>
+    <>
       {children}
-    </SafeAreaView>
+    </>
   )
 }
 

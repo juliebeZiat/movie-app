@@ -25,13 +25,13 @@ export const useMutationSignUp = () => {
   );
 };
 
-export const useMutationAddMovie = (movieId: string) => {
+export const useMutationAddMovie = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   return useMutation(
-    async() => await userService.addMovie({movieId}),
+    async(movieId: string) => await userService.addMovie({movieId}),
     {
-      onSuccess: () => {
+      onSuccess: (movieId) => {
         dispatch(addMovieInList(movieId));
         queryClient.invalidateQueries(["userList"]);
       }
@@ -39,13 +39,13 @@ export const useMutationAddMovie = (movieId: string) => {
   )
 };
 
-export const useMutationRemoveMovie = (movieId: string) => {
+export const useMutationRemoveMovie = () => {
   const queryClient = useQueryClient();
   const dispatch = useDispatch();
   return useMutation(
-    async() => await userService.removeMovie({movieId}),
+    async(movieId: string) => await userService.removeMovie({movieId}),
     {
-      onSuccess: () => {
+      onSuccess: (movieId) => {
         dispatch(removeMovieInList(movieId));
         queryClient.invalidateQueries(["userList"]);
       }

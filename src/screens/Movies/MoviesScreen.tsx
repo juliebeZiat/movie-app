@@ -18,7 +18,7 @@ const Movies: FC = () => {
   const allMoviesList = data.data;
 
   return (
-    <View style={{ alignItems: "center" }}>
+    <SafeAreaView style={{ alignItems: "center" }}>
       {isSuccess && data ? (
         <View style={{ width: dimensions.fullWidth - 50 }}>
           {/* <FirstItemMoviesScreen allMoviesList={allMoviesList} /> */}
@@ -27,7 +27,7 @@ const Movies: FC = () => {
       ) : (
         <LoadingIndicator />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

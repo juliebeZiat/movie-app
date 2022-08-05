@@ -30,10 +30,10 @@ export const NavMovieDetail: FC = () => {
   const { goBack } = useNavigation<Nav>();
   
   return (
-    <>
+    <View style={{ width: 50, marginTop: 60, marginLeft: 10 }}>
       <TouchableOpacity onPress={() => goBack()}>
         <ChevronLeftIcon color={colors.text} size={25} />
       </TouchableOpacity>
-    </>
+    </View>
   )
 }

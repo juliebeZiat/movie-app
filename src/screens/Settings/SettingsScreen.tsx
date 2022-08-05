@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 
 import { logout } from "../../state/reducer/auth.reducer";
 import { useAppTheme } from "../../hooks/useAppTheme";
-import { SwitchDarkTheme, SwitchSystemTheme } from "./components/SwitchTheme";
+import { SwitchDarkTheme, SwitchSystemTheme } from "../Settings/components/SwitchTheme";
 
 const Settings: FC = () => {
   const dispatch = useDispatch();
@@ -34,9 +34,6 @@ const Settings: FC = () => {
           paddingBottom: padding.lg,
         }}
       >
-        <TextTypography.Title style={{ marginBottom: margin.lg }}>
-          Settings
-        </TextTypography.Title>
         <TextTypography.Subtitle style={{ marginBottom: margin.md }}>
           Preferences
         </TextTypography.Subtitle>

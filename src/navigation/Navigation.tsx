@@ -25,6 +25,7 @@ import {
 import { useAppTheme } from "../hooks/useAppTheme";
 import { StatusBar } from "expo-status-bar";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import SearchMovieScreen from "../screens/SearchMovie/SearchMovieScreen";
 
 
 export type RootStackParamList = {
@@ -33,8 +34,8 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   Settings: undefined;
-  Root: undefined;
   "My List": undefined;
+  Search: undefined;
 };
 
 const Drawer = createDrawerNavigator();
@@ -131,6 +132,10 @@ const Navigation: FC = () => {
               />
             </>
           )}
+          <Drawer.Screen
+            name="Search"
+            component={SearchMovieScreen}
+          />
           <Drawer.Screen
               navigationKey={isLogged ? "user" : "guest"}
               name="Movie"

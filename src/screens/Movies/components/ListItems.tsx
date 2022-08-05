@@ -3,6 +3,7 @@ import { useNavigation, useTheme } from "@react-navigation/native";
 import React, { FC, useState } from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { getGenreArray } from "../../../functions/getGenreArray";
 import { color, dimensions, font, margin, radius } from "../../../styles";
 import TextTypography from "../../../styles/generalStyles/text.typography";
@@ -28,11 +29,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
 
 
   return (
-    <>
-      <TextTypography.PageTitle>
-        Movies
-      </TextTypography.PageTitle>
-
+    <SafeAreaView>
       <Picker
         selectedValue={selectedValue}
         onValueChange={(itemValue) => setselectedValue(itemValue)}
@@ -110,6 +107,6 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
           </TouchableOpacity>
         )}
       />
-    </>
+    </SafeAreaView>
   );
 };

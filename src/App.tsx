@@ -8,8 +8,7 @@ import { store } from './state/store';
 import InitProvider from './contexts/InitProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
-import { useRoute } from '@react-navigation/native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 let persistor = persistStore(store);
 const queryClient = new QueryClient;
@@ -25,7 +24,7 @@ const App: FC = () =>  {
             </InitProvider>
           </PersistGate>
         </ReduxProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen />
       </QueryClientProvider>
     </SafeAreaProvider>
   );

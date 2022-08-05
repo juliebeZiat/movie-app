@@ -50,3 +50,15 @@ export const useFetchUserDetails = () => {
     }
   )
 }
+
+export const useSearchMovie = (query: string) => {
+  return useQuery(
+    ["searchMovie"],
+    async () => await movieService.searchMovieService({query}),
+    {
+      onSuccess(data) {
+        return data;
+      },
+    }
+  )
+}

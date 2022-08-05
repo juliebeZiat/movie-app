@@ -56,4 +56,13 @@ export namespace Endpoints {
 
     export type Response = { removedMovie: string }
   }
+
+  export namespace SearchMovie {
+    export type Request = { query: string }
+
+    export type Response = { 
+      _id: number,
+      title: string,
+     }[]
+  }
 }

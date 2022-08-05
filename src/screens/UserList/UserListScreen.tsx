@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { FC } from "react";
-import { FlatList, Image, Text, View } from "react-native";
+import { FlatList, Image, View } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { XCircleIcon } from "react-native-heroicons/solid";
 import { SafeAreaView } from "react-native-safe-area-context";

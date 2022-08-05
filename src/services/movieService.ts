@@ -11,9 +11,15 @@ const fetchAllMoviesService = async () => {
   return response;
 };
 
+const searchMovieService = async (query: Endpoints.SearchMovie.Request) => {
+  const response = await axios.get<Endpoints.SearchMovie.Response>('movie/search', {data: query});
+  return response;
+}
+
 const movieService = {
   fetchMovieService,
-  fetchAllMoviesService
+  fetchAllMoviesService,
+  searchMovieService,
 };
 
 export default movieService;

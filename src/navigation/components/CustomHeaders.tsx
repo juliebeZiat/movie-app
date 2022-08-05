@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import { useNavigation, useTheme } from "@react-navigation/native";
 import { View } from "react-native";
 import { LargeLogo } from "../../styles/generalStyles/logo.style";
@@ -28,7 +28,7 @@ export const NavStyleLogout: FC = () => {
 export const NavMovieDetail: FC = () => {
   const { colors } = useTheme();
   const { goBack } = useNavigation<Nav>();
-
+  
   return (
     <>
       <TouchableOpacity onPress={() => goBack()}>

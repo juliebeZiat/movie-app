@@ -11,12 +11,9 @@ import UserList from "../screens/UserList/UserListScreen";
 import Settings from "../screens/Settings/SettingsScreen";
 import Movies from "../screens/Movies/MoviesScreen";
 
+import CustomDrawerContent from "./components/CustomDrawerContent";
 import { NavMovieDetail, NavStyleLogout } from "./components/CustomHeaders";
 import { color } from "../styles";
-import { useAppTheme } from "../hooks/useAppTheme";
-import { StatusBar } from "expo-status-bar";
-import { createDrawerNavigator } from "@react-navigation/drawer";
-
 import {
   CogIcon,
   HeartIcon,
@@ -24,7 +21,11 @@ import {
   LoginIcon,
   UserIcon,
 } from "react-native-heroicons/outline";
-import CustomDrawerContent from "./components/CustomDrawerContent";
+
+import { useAppTheme } from "../hooks/useAppTheme";
+import { StatusBar } from "expo-status-bar";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 
 export type RootStackParamList = {
   Home: undefined;
@@ -55,8 +56,8 @@ const Navigation: FC = () => {
       <NavigationContainer theme={theme}>
         <Drawer.Navigator
           drawerContent={(props) => <CustomDrawerContent {...props} />}
+          backBehavior="history"
         >
-          <>
             <Drawer.Screen
               navigationKey={isLogged ? "user" : "guest"}
               name="Home"
@@ -73,17 +74,6 @@ const Navigation: FC = () => {
                     : color.dark,
               }}
             />
-            <Drawer.Screen
-              navigationKey={isLogged ? "user" : "guest"}
-              name="Movie"
-              component={MovieDetail}
-              options={{
-                drawerItemStyle: { height: 0 },
-                headerTransparent: true,
-                header: () => <NavMovieDetail />,
-              }}
-            />
-          </>
           {isLogged ? (
             <>
               <Drawer.Screen
@@ -141,6 +131,16 @@ const Navigation: FC = () => {
               />
             </>
           )}
+          <Drawer.Screen
+              navigationKey={isLogged ? "user" : "guest"}
+              name="Movie"
+              component={MovieDetail}
+              options={{
+                drawerItemStyle: { height: 0 },
+                headerTransparent: true,
+                header: () => <NavMovieDetail />,
+              }}
+            />
         </Drawer.Navigator>
       </NavigationContainer>
     </>

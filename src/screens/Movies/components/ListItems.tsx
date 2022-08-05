@@ -27,6 +27,7 @@ export const ListItems: FC<IListItems> = ({ allMoviesList }: IListItems) => {
   const [selectedValue, setselectedValue] = useState('all');
   const filteredData = allMoviesList.filter((movie) => movie.genres.map((genre) => {return genre.name}).includes(selectedValue));
 
+
   return (
     <>
       <TextTypography.PageTitle>

@@ -9,12 +9,12 @@ import InitProvider from './contexts/InitProvider';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { useRoute } from '@react-navigation/native';
 
 let persistor = persistStore(store);
 const queryClient = new QueryClient;
 
 const App: FC = () =>  {
-
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>

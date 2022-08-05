@@ -2,6 +2,7 @@ import { useQuery } from "react-query";
 import { useDispatch } from "react-redux";
 import { setUserList } from "../state/reducer/movie.reducer";
 import { IQueryAllMovies, IQueryMovie } from "../type/queries";
+import authService from "./authService";
 import movieService from "./movieService";
 import userService from "./userService";
 
@@ -36,4 +37,16 @@ export const useFetchUserList = () => {
       },
     }
   );
+}
+
+export const useFetchUserDetails = () => {
+  return useQuery(
+    ["userDetails"],
+    async () => await authService.userDetails(),
+    {
+      onSuccess(data) {
+        return data;
+      }
+    }
+  )
 }

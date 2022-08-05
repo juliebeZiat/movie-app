@@ -11,9 +11,15 @@ const signUp = async({name, email, password}: Endpoints.SignUp.Request) => {
   return response.data;
 };
 
+const userDetails = async() => {
+  const response = await axios.get('auth/user');
+  return response.data;
+}
+
 const authService = {
   signIn,
   signUp,
+  userDetails,
 }
 
 export default authService;
